@@ -1,0 +1,379 @@
+[{
+    "institutionParentId": 1,
+    "institutionName": "California Maritime Academy",
+    "code": "CSUMA   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [73, 74, 75]
+}, {
+    "institutionParentId": 1,
+    "institutionName": "California State University, Maritime Academy",
+    "code": "CSUMA   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [73, 74, 75]
+}, {
+    "institutionParentId": 7,
+    "institutionName": "University of California, San Diego",
+    "code": "UCSD    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 11,
+    "institutionName": "California Polytechnic University, San Luis Obispo",
+    "code": "CPSLO   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 76, 75, 74]
+}, {
+    "institutionParentId": 11,
+    "institutionName": "California Polytechnic University, San Luis Obispo",
+    "code": "CPSLO   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [42, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 76, 75, 74]
+}, {
+    "institutionParentId": 12,
+    "institutionName": "California State University, Monterey Bay",
+    "code": "CSUMB   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 21,
+    "institutionName": "California State University, Hayward",
+    "code": "CSUHAY",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 21,
+    "institutionName": "California State University, East Bay",
+    "code": "CSUEB   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 21,
+    "institutionName": "California State University, East Bay",
+    "code": "CSUEB   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 23,
+    "institutionName": "California State University, San Marcos",
+    "code": "CSUSM   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 70, 71, 72]
+}, {
+    "institutionParentId": 24,
+    "institutionName": "California State University, Stanislaus",
+    "code": "CSUSTAN ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 48, 50, 51, 52, 53, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 26,
+    "institutionName": "San Diego State University",
+    "code": "SDSU    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [45, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 70, 71, 76]
+}, {
+    "institutionParentId": 29,
+    "institutionName": "California State University, Fresno",
+    "code": "CSUFRES ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [40, 42, 44, 46, 47, 48, 50, 52, 54, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 39,
+    "institutionName": "San Jose State University",
+    "code": "SJSU    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 42,
+    "institutionName": "California State University, Northridge",
+    "code": "CSUN    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75]
+}, {
+    "institutionParentId": 46,
+    "institutionName": "University of California, Riverside",
+    "code": "UCR     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 50,
+    "institutionName": "California State University, Dominguez Hills",
+    "code": "CSUDH   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 60,
+    "institutionName": "California State University, Sacramento",
+    "code": "CSUS    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 75,
+    "institutionName": "California Polytechnic University, Pomona",
+    "code": "CPP     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [41, 42, 43, 46, 49, 51, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 75,
+    "institutionName": "California Polytechnic University, Pomona",
+    "code": "CPP     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [41, 42, 43, 46, 49, 51, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 76,
+    "institutionName": "California State University, Los Angeles",
+    "code": "CSULA   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [48, 49, 50, 51, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 79,
+    "institutionName": "University of California, Berkeley",
+    "code": "UCB     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 81,
+    "institutionName": "California State University, Long Beach",
+    "code": "CSULB   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [50, 53, 54, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 85,
+    "institutionName": "California State University, San Bernardino",
+    "code": "CSUSB   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 70, 71, 75]
+}, {
+    "institutionParentId": 85,
+    "institutionName": "California State University, San Bernardino",
+    "code": "CSUSB   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 70, 71, 75]
+}, {
+    "institutionParentId": 88,
+    "institutionName": "Sonoma State University",
+    "code": "SSU     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 89,
+    "institutionName": "University of California, Davis",
+    "code": "UCD     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 75, 74, 76]
+}, {
+    "institutionParentId": 98,
+    "institutionName": "California State University, Bakersfield",
+    "code": "CSUB    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 115,
+    "institutionName": "Humboldt State University",
+    "code": "HSU     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74]
+}, {
+    "institutionParentId": 115,
+    "institutionName": "California Polytechnic University, Humboldt",
+    "code": "HSU     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [47, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74]
+}, {
+    "institutionParentId": 116,
+    "institutionName": "San Francisco State University",
+    "code": "SFSU    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [45, 47, 48, 49, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 117,
+    "institutionName": "University of California, Los Angeles",
+    "code": "UCLA    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [60, 67, 70, 71, 72, 73, 74, 75]
+}, {
+    "institutionParentId": 120,
+    "institutionName": "University of California, Irvine",
+    "code": "UCI     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 128,
+    "institutionName": "University of California, Santa Barbara",
+    "code": "UCSB    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [44, 45, 46, 47, 48, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75]
+}, {
+    "institutionParentId": 129,
+    "institutionName": "California State University, Fullerton",
+    "code": "CSUFULL ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [42, 43, 46, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 132,
+    "institutionName": "University of California, Santa Cruz",
+    "code": "UCSC    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [48, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 141,
+    "institutionName": "California State University, Chico",
+    "code": "CSUC    ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 143,
+    "institutionName": "California State University, Channel Islands",
+    "code": "CSUCI   ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [55, 56, 59, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76]
+}, {
+    "institutionParentId": 144,
+    "institutionName": "University of California, Merced",
+    "code": "UCM     ",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75]
+}, {
+    "institutionParentId": 222,
+    "institutionName": "Palo Alto University",
+    "code": "PAU",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75]
+}, {
+    "institutionParentId": 217,
+    "institutionName": "University of the Pacific",
+    "code": "UOP",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75, 76]
+}, {
+    "institutionParentId": 206,
+    "institutionName": "Fresno Pacific University",
+    "code": "FPU",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75]
+}, {
+    "institutionParentId": 213,
+    "institutionName": "National University",
+    "code": "NU",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75]
+}, {
+    "institutionParentId": 211,
+    "institutionName": "Dominican University of California",
+    "code": "DUC",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75]
+}, {
+    "institutionParentId": 227,
+    "institutionName": "Santa Clara University",
+    "code": "SCU",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75, 76]
+}, {
+    "institutionParentId": 215,
+    "institutionName": "Touro University Worldwide",
+    "code": "TUW",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75, 76]
+}, {
+    "institutionParentId": 209,
+    "institutionName": "Loyola Marymount University",
+    "code": "LMU",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75, 76]
+}, {
+    "institutionParentId": 207,
+    "institutionName": "Concordia University Irvine",
+    "code": "CUI",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75, 76]
+}, {
+    "institutionParentId": 214,
+    "institutionName": "Pepperdine University",
+    "code": "PEPRDN",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [76]
+}, {
+    "institutionParentId": 228,
+    "institutionName": "Simpson University",
+    "code": "SU",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75]
+}, {
+    "institutionParentId": 235,
+    "institutionName": "University of San Francisco",
+    "code": "USFCA",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [76]
+}, {
+    "institutionParentId": 220,
+    "institutionName": "University of Redlands",
+    "code": "UOFR",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75]
+}, {
+    "institutionParentId": 230,
+    "institutionName": "Azusa Pacific University",
+    "code": "APU",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [76]
+}, {
+    "institutionParentId": 201,
+    "institutionName": "California Lutheran University",
+    "code": "CLU",
+    "isCommunityCollege": false,
+    "sendingYearIds": [],
+    "receivingYearIds": [75]
+}]
