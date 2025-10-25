@@ -1,0 +1,82 @@
+cat > /Users/zhuowenfeng6626/TransferAssist/collegeList.txt <<'EOF'
+--- University of California (UC) campuses ---
+University of California, Berkeley (UC Berkeley)
+University of California, Davis (UC Davis)
+University of California, Irvine (UC Irvine)
+University of California, Los Angeles (UCLA)
+University of California, Merced (UC Merced)
+University of California, Riverside (UC Riverside)
+University of California, San Diego (UC San Diego)
+University of California, San Francisco (UC San Francisco)
+University of California, Santa Barbara (UC Santa Barbara)
+University of California, Santa Cruz (UC Santa Cruz)
+
+--- California State University (CSU) campuses ---
+California State University, Bakersfield
+California State University, Channel Islands
+California State University, Chico
+California State University, Dominguez Hills
+California State University, East Bay
+California State University, Fresno (Fresno State)
+California State University, Fullerton
+California State Polytechnic University, Humboldt (Cal Poly Humboldt)
+California State University, Long Beach
+California State University, Los Angeles
+California State University Maritime Academy
+California State University, Monterey Bay
+California State University, Northridge (CSUN)
+California State Polytechnic University, Pomona (Cal Poly Pomona)
+California State University, Sacramento (Sacramento State)
+California State University, San Bernardino
+San Diego State University
+San Francisco State University
+San Jose State University
+California Polytechnic State University, San Luis Obispo (Cal Poly SLO)
+Sonoma State University
+California State University, Stanislaus
+California State University San Marcos
+
+--- Major private and independent universities and colleges ---
+Stanford University
+California Institute of Technology (Caltech)
+University of Southern California (USC)
+Pepperdine University
+Loyola Marymount University
+University of San Diego
+University of the Pacific
+Santa Clara University
+Chapman University
+University of La Verne
+Occidental College
+Claremont Colleges:
+    - Pomona College
+    - Claremont McKenna College
+    - Harvey Mudd College
+    - Pitzer College
+    - Scripps College
+    - Claremont Graduate University
+Biola University
+Azusa Pacific University
+Point Loma Nazarene University
+California Baptist University
+Westmont College
+Dominican University of California
+Whittier College
+Mills College (historic; merged with Northeastern University)
+University of Redlands
+Humboldt State (listed above as Cal Poly Humboldt)
+Pepperdine University
+Alliant International University
+Thomas Aquinas College (CA campus)
+Holy Names University (closed 2023; historical)
+University of San Francisco
+Saint Mary’s College of California
+California College of the Arts
+Mount Saint Mary’s University (Los Angeles)
+Mills College at Northeastern (see note)
+Samuel Merritt University
+Keck Graduate Institute
+Soka University of America
+Vanguard University of Southern California
+Western University of Health Sciences
+Azusa Pacific University
