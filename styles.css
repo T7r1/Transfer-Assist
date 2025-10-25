@@ -17,18 +17,27 @@ header {
 }
 
 .title {
+  padding-left: 10px;
   font-size: 30px;
   margin-top: 10px;
   color: white;
   text-align: left;
 }
 
+h1 {
+  padding-left: 10px;
+  font-size: 30px;
+  text-align: left;
+}
+
 h2 {
-  font-size: 40px;
+  padding-left: 10px;
+  font-size: 30px;
   text-align: left;
 }
 
 p {
+  padding-left: 10px;
   font-size: 20px;
   text-align: left;
 }
@@ -37,6 +46,11 @@ footer {
   font-style: italic;
 }
 
+ol {
+  padding-left: 40px;
+  font-size: 20px;
+  text-align: left;
+}
 nav {
   display: flex;
   gap: 50px;
@@ -45,6 +59,7 @@ nav {
   background-color: rgb(96, 5, 121);
 }
 nav a {
+  padding-left: 10px;
   color: white;
   font-size: 30px;
   padding: 10px 15px; /* box inside spacing */
