@@ -33,17 +33,18 @@
 
 					// major array
 					const majorsSet = new Set();
+					majorArray=[]
 					const universities = data.universities || [];
 					universities.forEach(u => {
 						if (Array.isArray(u.majors)) {
 							u.majors.forEach(m => {
-								for (let i=0)
-								if (m && typeof m === 'string') majorsSet.add(m.trim());
-							});
-						}
-						if (Array.isArray(u.majors)) {
-							u.majors.forEach(m => {
-								if (m && typeof m === 'string') majorsSet.add(m.trim());
+								for (let i=0;i<majorArray.length;i++){
+									if (u.majors[i] === m ) break;
+								}
+								if (m && typeof m === 'string') {
+									majorsSet.add(m.trim());
+									majorArray.push(m.trim());
+								}
 							});
 						}
 					});
