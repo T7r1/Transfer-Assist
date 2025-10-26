@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || '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'
+  apiKey: process.env.ANTHROPIC_API_KEY || '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'
 });
 
 app.post('/api/anthropic', async (req, res) => {
