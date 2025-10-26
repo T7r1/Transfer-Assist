@@ -46,6 +46,10 @@ p {
   text-align: left;
 }
 
+.CollegeList {
+  font-size: 20px;
+}
+
 footer {
   font-style: italic;
 }
