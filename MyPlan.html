@@ -42,8 +42,8 @@
       <div class="title">Transfer Assist — Web</div>
       <label>AI Model</label>
       <select id="model" class="select">
-        <option>claude-3-sonnet-20240229</option>
-        <option>claude-sonnet-4-5-20250929</option>
+        <option>Legacy AI</option>
+        <option>Newest AI</option>
       </select>
       <label>Max tokens</label>
       <input id="maxTokens" class="spin" type="number" min="200" max="4000" value="1200"/>
@@ -132,10 +132,12 @@
   <script>
     // ---------- Data ----------
     const state = {
-      uniData: { universities: [] },  // {name, majors[]}
-      ganttCourses: [],
-      milestones: []
+    uniData: { universities: [] },
+    ganttCourses: [],
+    milestones: [],
+    chat: [] // [{role:'user'|'assistant', text:'...'}]
     };
+
 
     // ---------- Helpers ----------
     const $  = s => document.querySelector(s);
@@ -166,6 +168,23 @@
         const mv = $('#major').value.trim();
         if(mv && ![...dl.children].some(o=>o.value===mv)){ const opt=document.createElement('option'); opt.value=mv; dl.appendChild(opt); }
     }
+
+    function renderChat(){
+        const box = $('#aiResp');
+        box.innerHTML = state.chat.map(m => {
+            const who = m.role === 'user' ? 'You' : 'AI';
+            return `<div style="margin:6px 0;">
+            <div style="font-weight:600;color:${m.role==='user'?'#fff':'#9bdcff'}">${who}</div>
+            <div style="white-space:pre-wrap">${m.text}</div>
+            </div>`;
+        }).join('');
+        box.scrollTop = box.scrollHeight;
+    }
+    function appendChat(role, text){
+        state.chat.push({role, text});
+        renderChat();
+    }
+
 
     // ---------- Bridge state ----------
     function readBridgeStateAndSeed(){
@@ -373,48 +392,42 @@ Please provide:
 `;
     }
 
-    async function callAnthropic(prompt){
-      try{
-        const modelEl = document.querySelector('#model');
-        const maxTokEl = document.querySelector('#maxTokens');
-        const model = modelEl ? modelEl.value : 'claude-3-5-sonnet-latest';
-        const max_tokens = maxTokEl ? Number(maxTokEl.value) || 512 : 512;
+async function callAnthropic({messages}){
+  try{
+    const model = $('#model')?.value || 'claude-sonnet-4-5-20250929' || 'claude-3-haiku-20240307';
+    const max_tokens = Number($('#maxTokens')?.value) || 512;
 
-        const resp = await fetch('/api/anthropic', {
-          method:'POST',
-          headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({
-            model,
-            max_tokens,
-            messages:[{role:'user', content:[{type:'text', text: prompt}]}],
-            prompt
-          })
-        });
-        if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const data = await resp.json();
+    const resp = await fetch('/api/anthropic', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ model, max_tokens, messages })
+    });
+    if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+    const data = await resp.json();
 
-        if (typeof data === 'string') return data;
-        if (typeof data.text === 'string') return data.text;
-        if (Array.isArray(data.content)) {
-          return data.content.map(c => typeof c === 'string' ? c : (c?.text||'')).join('\n').trim() || '[empty response]';
-        }
-        if (data.message?.content) {
-          const c = data.message.content;
-          return Array.isArray(c) ? c.map(x=>x.text||'').join('\n') : (c.text || String(c));
-        }
-        return '[empty response]';
-      }catch(err){
-        console.warn('Anthropic fallback:', err);
-        return `text_suggestion:{Focus on completing missing math/physics prerequisites this term, limit load to 3 rigorous courses, schedule labs on lighter weeks, and submit applications 4 weeks before deadlines.}
+    // 兼容多种后端包装
+    if (typeof data === 'string') return data;
+    if (typeof data.text === 'string') return data.text;
+    if (Array.isArray(data.content)) {
+      return data.content.map(c => typeof c === 'string' ? c : (c?.text||'')).join('\n').trim() || '[empty response]';
+    }
+    if (data.message?.content) {
+      const c = data.message.content;
+      return Array.isArray(c) ? c.map(x=>x.text||'').join('\n') : (c.text || String(c));
+    }
+    return '[empty response]';
+  }catch(err){
+    console.warn('Anthropic fallback:', err);
+    return `text_suggestion:{Focus on completing missing math/physics prerequisites this term, limit load to 3 rigorous courses, schedule labs on lighter weeks, and submit applications 4 weeks before deadlines.}
 
 code:{
 Course,Term,Priority,Credits,DurationWeeks,Notes
-Calculus II,${document.querySelector('#term')?.value||'Fall'} ${document.querySelector('#termYear')?.value||'2025'},High,5,16,
-Physics II,${document.querySelector('#term')?.value||'Fall'} ${document.querySelector('#termYear')?.value||'2025'},High,5,16,with lab
-Linear Algebra,${document.querySelector('#term')?.value||'Fall'} ${document.querySelector('#termYear')?.value||'2025'},Medium,4,16,
+Calculus II,${$('#term')?.value||'Fall'} ${$('#termYear')?.value||'2025'},High,5,16,
+Physics II,${$('#term')?.value||'Fall'} ${$('#termYear')?.value||'2025'},High,5,16,with lab
+Linear Algebra,${$('#term')?.value||'Fall'} ${$('#termYear')?.value||'2025'},Medium,4,16,
 }`;
-      }
-    }
+  }
+}
 
     function extractTextSuggestion(fullText){
       const m = fullText.match(/text_suggestion\s*:\s*\{([\s\S]*?)\}/i);
@@ -489,63 +502,56 @@ Linear Algebra,${document.querySelector('#term')?.value||'Fall'} ${document.quer
 
     // NEW FUNCTION: Run AI for suggestions or plan generation
     async function runAI(kind){
-      const busy = $('#aiBusy');
-      const respBox = $('#aiResp');
-      busy.textContent = 'Generating…';
+  const busy = $('#aiBusy'); busy.textContent = 'Generating…';
 
-      const sys = buildAIContext();
-      const prompt = kind==='missing'
-          ? `${sys}\n\nList missing courses as CSV with header: Course,Term,Priority,Credits,DurationWeeks,Notes. Also include a brief "text_suggestion" paragraph first.`
-          : `${sys}\n\nPropose a term-by-term transfer plan as CSV with header: Course,Term,Priority,Credits,DurationWeeks,Notes. Also include a brief "text_suggestion" paragraph first.`;
+  const sys = { role:'system', content:[{type:'text', text: buildAIContext()}] };
+  const history = state.chat.map(m => ({ role:m.role, content:[{type:'text', text:m.text}]}));
+  const userText = (kind==='missing')
+    ? `${buildAIContext()}\n\nList missing courses as CSV with header: Course,Term,Priority,Credits,DurationWeeks,Notes. Also include a brief "text_suggestion" paragraph first.`
+    : `${buildAIContext()}\n\nPropose a term-by-term transfer plan as CSV with header: Course,Term,Priority,Credits,DurationWeeks,Notes. Also include a brief "text_suggestion" paragraph first.`;
 
-      const raw = await callAnthropic(prompt);
-      busy.textContent = '';
-      
-      const textSuggestion = extractTextSuggestion(raw);
-      respBox.textContent = textSuggestion;
+  appendChat('user', kind==='missing' ? 'AI: Suggest Missing Courses' : 'AI: Generate Transfer Plan');
 
-      const csv = parseCsvFromResponse(raw);
-      if (csv) {
-        const imported = importPlannedFromCsv(csv);
-        if (imported) {
-          // Auto-add to Gantt after a brief delay to ensure UI updates
-          setTimeout(() => {
-            $('#addToGantt').click();
-            setStatus('AI courses added to Gantt chart');
-          }, 500);
-        }
-      }
-    }
+  const raw = await callAnthropic({ messages:[sys, ...history, {role:'user', content:[{type:'text', text:userText}]}] });
+  busy.textContent = '';
+
+  const textSuggestion = extractTextSuggestion(raw);
+  appendChat('assistant', textSuggestion);
+
+  const csv = parseCsvFromResponse(raw);
+  if (csv && importPlannedFromCsv(csv)) {
+    setTimeout(() => { $('#addToGantt').click(); setStatus('AI courses added to Gantt chart'); }, 300);
+  }
+}
+
 
     // Event listeners for AI buttons
     $('#suggestBtn').addEventListener('click', () => runAI('missing'));
     $('#genPlanBtn').addEventListener('click', () => runAI('plan'));
 
     $('#askBtn').addEventListener('click', async ()=>{
-      const user=$('#userPrompt').value.trim(); 
-      if(!user){ alert('Enter a question.'); return; }
-      
-      $('#aiBusy').textContent='Generating…';
-      const context = buildAIContext();
-      const fullPrompt = `${context}\n\nUser Question: ${user}`;
-      
-      const text=await callAnthropic(fullPrompt); 
-      $('#aiBusy').textContent='';
-      
-      const textSuggestion = extractTextSuggestion(text);
-      $('#aiResp').textContent = textSuggestion;
-      
-      const csv=parseCsvFromResponse(text);
-      if(csv) {
-        const imported = importPlannedFromCsv(csv);
-        if (imported) {
-          setTimeout(() => {
-            $('#addToGantt').click();
-            setStatus('AI courses added to Gantt chart');
-          }, 500);
+    const user = $('#userPrompt').value.trim();
+    if(!user){ alert('Enter a question.'); return; }
+    $('#userPrompt').value = '';
+    $('#aiBusy').textContent = 'Generating…';
+
+    const sys = { role:'system', content:[{type:'text', text: buildAIContext()}] };
+    const history = state.chat.map(m => ({ role:m.role, content:[{type:'text', text:m.text}]}));
+
+    appendChat('user', user);
+
+    const raw = await callAnthropic({ messages:[sys, ...history, {role:'user', content:[{type:'text', text:`${buildAIContext()}\n\nUser Question: ${user}` }]}] });
+    $('#aiBusy').textContent = '';
+
+    const textSuggestion = extractTextSuggestion(raw);
+    appendChat('assistant', textSuggestion);
+
+    const csv = parseCsvFromResponse(raw);
+        if (csv && importPlannedFromCsv(csv)) {
+            setTimeout(() => { $('#addToGantt').click(); setStatus('AI courses added to Gantt chart'); }, 300);
         }
-      }
     });
+
 
     // ---------- Events ----------
     $('#currentUni').addEventListener('input', ()=>{ 
@@ -588,5 +594,6 @@ Linear Algebra,${document.querySelector('#term')?.value||'Fall'} ${document.quer
     
     boot();
   </script>
+  <script src="Server.js"></script>
 </body>
 </html>
