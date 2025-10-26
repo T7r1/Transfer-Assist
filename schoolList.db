@@ -1,5 +1,4 @@
-cat > /Users/zhuowenfeng6626/TransferAssist/collegeList.txt <<'EOF'
---- University of California (UC) campuses ---
+
 University of California, Berkeley (UC Berkeley)
 University of California, Davis (UC Davis)
 University of California, Irvine (UC Irvine)
@@ -10,8 +9,6 @@ University of California, San Diego (UC San Diego)
 University of California, San Francisco (UC San Francisco)
 University of California, Santa Barbara (UC Santa Barbara)
 University of California, Santa Cruz (UC Santa Cruz)
-
---- California State University (CSU) campuses ---
 California State University, Bakersfield
 California State University, Channel Islands
 California State University, Chico
@@ -35,8 +32,6 @@ California Polytechnic State University, San Luis Obispo (Cal Poly SLO)
 Sonoma State University
 California State University, Stanislaus
 California State University San Marcos
-
---- Major private and independent universities and colleges ---
 Stanford University
 California Institute of Technology (Caltech)
 University of Southern California (USC)
@@ -49,12 +44,12 @@ Chapman University
 University of La Verne
 Occidental College
 Claremont Colleges:
-    - Pomona College
-    - Claremont McKenna College
-    - Harvey Mudd College
-    - Pitzer College
-    - Scripps College
-    - Claremont Graduate University
+Pomona College
+Claremont McKenna College
+Harvey Mudd College
+Pitzer College
+Scripps College
+Claremont Graduate University
 Biola University
 Azusa Pacific University
 Point Loma Nazarene University

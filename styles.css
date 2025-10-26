@@ -13,7 +13,11 @@ body {
   margin-right: auto;
 }
 
-header {
+/* header {
+} */
+.collegeDropdown {
+  padding-left: 10px;
+  font-size: 30px;
 }
 
 .title {
@@ -45,9 +49,7 @@ p {
 footer {
   font-style: italic;
 }
-
-ol {
-  padding-left: 40px;
+*/ ol {
   font-size: 20px;
   text-align: left;
 }
@@ -67,6 +69,7 @@ nav a {
   border-radius: 10px; /* rounded corners */
   transition: background 0.3s;
 }
+
 nav a:hover {
   background-color: rgb(59, 3, 96);
 }

@@ -6,18 +6,31 @@
 		<link rel="stylesheet" href="styles.css">
 	</head>
 	<body>
-		<header>
-			<h1>Transfer Assist</h1>
-		</header> 
+		<div class="header">
+			<nav>
+				<span class="title">Transfer Assist</span>
+				<a href="index.html">Home</a>
+				<a href="MyColleges.html">My Colleges</a>
+				<a href="Schedule.html">Schedules</a>
+			</nav>
+		</div>
 		<p>My Colleges </p>
-	 <nav>
-		<a href="index.html">Home</a>
-		<a href="MyColleges.html">My Colleges</a>
-		<a href="Schedule.html">Schedules</a>
-	</nav>
-		<br>		<br>
+		<div class="collegeDropdown">
+		<label for="collegeSelect">Choose a college:</label>
+		<select id="collegeSelect">
+		<option value="ucla">UCLA</option>
+		<option value="ucb">UC Berkeley</option>
+		<option value="ucsd">UC San Diego</option>
+		</div>
+		</select>
+		<input type="text" id="input" placeholder="Enter your school..."> 
+		<button id="btn">Add Item</button>
+		<ol id="myList">
+        	<li>College 1</li>
+   		</ol>
 		    </section>
 	    <footer>
-	    </footer>
+		</footer>
+				<script src="script.js"></script>
 	</body>
 </html>
