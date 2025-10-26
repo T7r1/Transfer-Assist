@@ -1,5 +1,5 @@
 const btn = document.getElementById("btn");
-const input = document.getElementById("input");
+const input = document.getElementById("collegeSelect2");
 const ls = document.getElementById("myList");
 myColleges = [];
 

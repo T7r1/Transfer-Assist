@@ -400,14 +400,11 @@
     },
     {
       "name": "San Diego State University",
-      "majors": [
-        "Media Relations"
-      ]
+      "majors": ["Media Relations"]
     },
     {
       "name": "American River College",
       "majors": [
-        "10150 Missile Way Mather, CA 95655",
         "AA in Accounting",
         "AA in Art",
         "AA in Art New Media",
@@ -812,9 +809,7 @@
     },
     {
       "name": "Foothill College",
-      "majors": [
-        "Bachelor of Science (BS) Degrees"
-      ]
+      "majors": ["Bachelor of Science (BS) Degrees"]
     },
     {
       "name": "Modesto Junior College",
@@ -976,11 +971,7 @@
     },
     {
       "name": "Canada College",
-      "majors": [
-        "Consumer Information",
-        "Final Exams",
-        "The JAMS"
-      ]
+      "majors": ["Consumer Information", "Final Exams", "The JAMS"]
     },
     {
       "name": "Chaffey College",
@@ -1115,9 +1106,7 @@
     },
     {
       "name": "California State University, Los Angeles",
-      "majors": [
-        "Minor in Biomedical Engineering (BME)"
-      ]
+      "majors": ["Minor in Biomedical Engineering (BME)"]
     },
     {
       "name": "Laney College",
@@ -1792,9 +1781,7 @@
     },
     {
       "name": "Cuyamaca College",
-      "majors": [
-        "Consumer Information"
-      ]
+      "majors": ["Consumer Information"]
     },
     {
       "name": "Mendocino College",
@@ -1872,10 +1859,7 @@
     },
     {
       "name": "Grossmont College",
-      "majors": [
-        "Consumer Information",
-        "Health Updates"
-      ]
+      "majors": ["Consumer Information", "Health Updates"]
     },
     {
       "name": "Imperial Valley College",
@@ -3222,9 +3206,7 @@
     },
     {
       "name": "Notre Dame de Namur University",
-      "majors": [
-        "BA Psychology Degree Completion"
-      ]
+      "majors": ["BA Psychology Degree Completion"]
     },
     {
       "name": "University of Redlands",
