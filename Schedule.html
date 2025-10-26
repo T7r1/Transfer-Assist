@@ -11,23 +11,62 @@
 				<span class="title">Transfer Assist</span>
 				<a href="index.html">Home</a>
 				<a href="MyColleges.html">My Colleges</a>
-				<a href="Schedule.html">Schedules</a>
+				<a href="Schedule.html" class="Schedule">Schedules</a>
 			</nav>
 		</div>
 		<h1>Schedule </h1>
-		<h2>Major</h2>
-		
-			<h2>College Selection</h2>
-			
-			<div class="scrollBox">
-			<ol id="collegeCheckList">
-        <li> 1</li>
-    </ol>
-	 </div>
-		<br>		<br>
-		    </section>
-	    <footer>
-	    </footer>
-		<script src="script.js"></script>
-	</body>
+		<div class="majorDropdown">
+			      <label for="dropdown">Major:</label>
+			<select id="dropdown">
+				<option value=""  > Select major... </option>
+			</select>
+		</div>		
+		<script>
+			fetch("university.json")
+				.then(response => response.json())
+				.then(data => {
+					const select = document.getElementById("dropdown");
+					if (!select) {
+						console.error('No select element with id "dropdown" found');
+						return;
+					}
+
+					// major array
+					const majorsSet = new Set();
+					const universities = data.universities || [];
+					universities.forEach(u => {
+						if (Array.isArray(u.majors)) {
+							u.majors.forEach(m => {
+								for (let i=0)
+								if (m && typeof m === 'string') majorsSet.add(m.trim());
+							});
+						}
+						if (Array.isArray(u.majors)) {
+							u.majors.forEach(m => {
+								if (m && typeof m === 'string') majorsSet.add(m.trim());
+							});
+						}
+					});
+
+					// Clear existing options except the placeholder
+					// (keep the first placeholder option if present)
+					const placeholder = select.querySelector('option');
+					select.innerHTML = '';
+					if (placeholder) select.appendChild(placeholder);
+
+					// Sort and append options
+					Array.from(majorsSet).sort((a,b) => a.localeCompare(b)).forEach(major => {
+						const option = document.createElement('option');
+						option.value = major;
+						option.textContent = major;
+						select.appendChild(option);
+					});
+				})
+				.catch(err => console.error('error fetching/unpacking university.json:', err));
+		</script>
+            </section>
+        <footer>
+        </footer>
+        <script src="script.js"></script>
+    </body>
 </html>

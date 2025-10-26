@@ -5,6 +5,9 @@ body {
   text-align: left;
   font-size: 400%;
   margin: 0;
+transform: scale(1.5);
+transform-origin: top left;
+
 }
 
 #content {
@@ -15,11 +18,17 @@ body {
 
 /* header {
 } */
+option {
+  size;
+}
 .collegeDropdown {
   padding-left: 10px;
   font-size: 30px;
 }
-
+.majorDropdown {
+  padding-left: 10px;
+  font-size: 30px;
+}
 .title {
   padding-left: 10px;
   font-size: 30px;
@@ -48,6 +57,11 @@ p {
 
 .CollegeList {
   font-size: 20px;
+  padding-left: 10px;
+}
+
+br {
+  
 }
 
 footer {
@@ -69,11 +83,23 @@ nav a {
   color: white;
   font-size: 30px;
   padding: 10px 15px; /* box inside spacing */
-  background-color: rgb(139, 53, 197); /* box color */
+  background-color: rgb(96, 5, 121);
   border-radius: 10px; /* rounded corners */
   transition: background 0.3s;
 }
 
 nav a:hover {
-  background-color: rgb(59, 3, 96);
+  background-color: rgb(139, 53, 197); /* box color */
+}
+
+.home {
+  background-color: rgb(139, 53, 197); /* box color */
+}
+
+.MyColleges {
+  background-color: rgb(139, 53, 197); /* box color */
+}
+
+.Schedule {
+  background-color: rgb(139, 53, 197); /* box color */
 }
