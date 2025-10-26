@@ -1,195 +1,860 @@
 <!DOCTYPE html>
-	<head>
-		<meta charset="utf-8">
-		<title>MyColleges | Transfer Assist</title>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="styles.css">
-	</head>
-	<body>
-		<div class="header">
-			<nav>
-				<span class="title">Transfer Assist</span>
-				<a href="index.html">Home</a>
-				<a href="MyColleges.html" class="MyColleges">My Colleges</a>
-				<a href="Schedule.html">Schedules</a>
-			</nav>
-		</div>
-		<h1>My Colleges</h1>
-		<div class="collegeDropdown">
-			<label for="collegeSelect">Current college:</label>
-			<select id="collegeSelect">
-				<option value="">-- Please choose a college --</option>
-				<option value="university-of-california-berkeley">University of California, Berkeley (UC Berkeley)</option>
-				<option value="university-of-california-davis">University of California, Davis (UC Davis)</option>
-				<option value="university-of-california-irvine">University of California, Irvine (UC Irvine)</option>
-				<option value="university-of-california-los-angeles">University of California, Los Angeles (UCLA)</option>
-				<option value="university-of-california-merced">University of California, Merced (UC Merced)</option>
-				<option value="university-of-california-riverside">University of California, Riverside (UC Riverside)</option>
-				<option value="university-of-california-san-diego">University of California, San Diego (UC San Diego)</option>
-				<option value="university-of-california-san-francisco">University of California, San Francisco (UC San Francisco)</option>
-				<option value="university-of-california-santa-barbara">University of California, Santa Barbara (UC Santa Barbara)</option>
-				<option value="university-of-california-santa-cruz">University of California, Santa Cruz (UC Santa Cruz)</option>
-				<option value="california-state-university-bakersfield">California State University, Bakersfield</option>
-				<option value="california-state-university-channel-islands">California State University, Channel Islands</option>
-				<option value="california-state-university-chico">California State University, Chico</option>
-				<option value="california-state-university-dominguez-hills">California State University, Dominguez Hills</option>
-				<option value="california-state-university-east-bay">California State University, East Bay</option>
-				<option value="california-state-university-fresno">California State University, Fresno (Fresno State)</option>
-				<option value="california-state-university-fullerton">California State University, Fullerton</option>
-				<option value="california-state-polytechnic-university-humboldt">California State Polytechnic University, Humboldt (Cal Poly Humboldt)</option>
-				<option value="california-state-university-long-beach">California State University, Long Beach</option>
-				<option value="california-state-university-los-angeles">California State University, Los Angeles</option>
-				<option value="california-state-university-maritime-academy">California State University Maritime Academy</option>
-				<option value="california-state-university-monterey-bay">California State University, Monterey Bay</option>
-				<option value="california-state-university-northridge">California State University, Northridge (CSUN)</option>
-				<option value="california-state-polytechnic-university-pomona">California State Polytechnic University, Pomona (Cal Poly Pomona)</option>
-				<option value="california-state-university-sacramento">California State University, Sacramento (Sacramento State)</option>
-				<option value="california-state-university-san-bernardino">California State University, San Bernardino</option>
-				<option value="san-diego-state-university">San Diego State University</option>
-				<option value="san-francisco-state-university">San Francisco State University</option>
-				<option value="san-jose-state-university">San Jose State University</option>
-				<option value="california-polytechnic-state-university-san-luis-obispo">California Polytechnic State University, San Luis Obispo (Cal Poly SLO)</option>
-				<option value="sonoma-state-university">Sonoma State University</option>
-				<option value="california-state-university-stanislaus">California State University, Stanislaus</option>
-				<option value="california-state-university-san-marcos">California State University San Marcos</option>
-				<option value="stanford-university">Stanford University</option>
-				<option value="california-institute-of-technology">California Institute of Technology (Caltech)</option>
-				<option value="university-of-southern-california">University of Southern California (USC)</option>
-				<option value="pepperdine-university">Pepperdine University</option>
-				<option value="loyola-marymount-university">Loyola Marymount University</option>
-				<option value="university-of-san-diego">University of San Diego</option>
-				<option value="university-of-the-pacific">University of the Pacific</option>
-				<option value="santa-clara-university">Santa Clara University</option>
-				<option value="chapman-university">Chapman University</option>
-				<option value="university-of-la-verne">University of La Verne</option>
-				<option value="occidental-college">Occidental College</option>
-				<option value="claremont-colleges">Claremont Colleges:</option>
-				<option value="pomona-college">Pomona College</option>
-				<option value="claremont-mckenna-college">Claremont McKenna College</option>
-				<option value="harvey-mudd-college">Harvey Mudd College</option>
-				<option value="pitzer-college">Pitzer College</option>
-				<option value="scripps-college">Scripps College</option>
-				<option value="claremont-graduate-university">Claremont Graduate University</option>
-				<option value="biola-university">Biola University</option>
-				<option value="azusa-pacific-university">Azusa Pacific University</option>
-				<option value="point-loma-nazarene-university">Point Loma Nazarene University</option>
-				<option value="california-baptist-university">California Baptist University</option>
-				<option value="westmont-college">Westmont College</option>
-				<option value="dominican-university-of-california">Dominican University of California</option>
-				<option value="whittier-college">Whittier College</option>
-				<option value="mills-college">Mills College (historic; merged with Northeastern University)</option>
-				<option value="university-of-redlands">University of Redlands</option>
-				<option value="humboldt-state">Humboldt State (listed above as Cal Poly Humboldt)</option>
-				<option value="pepperdine-university-2">Pepperdine University</option>
-				<option value="alliant-international-university">Alliant International University</option>
-				<option value="thomas-aquinas-college">Thomas Aquinas College (CA campus)</option>
-				<option value="holy-names-university">Holy Names University (closed 2023; historical)</option>
-				<option value="university-of-san-francisco">University of San Francisco</option>
-				<option value="saint-marys-college-of-california">Saint Mary’s College of California</option>
-				<option value="california-college-of-the-arts">California College of the Arts</option>
-				<option value="mount-saint-marys-university">Mount Saint Mary’s University (Los Angeles)</option>
-				<option value="mills-college-northeastern">Mills College at Northeastern (see note)</option>
-				<option value="samuel-merritt-university">Samuel Merritt University</option>
-				<option value="keck-graduate-institute">Keck Graduate Institute</option>
-				<option value="soka-university-of-america">Soka University of America</option>
-				<option value="vanguard-university-of-southern-california">Vanguard University of Southern California</option>
-				<option value="western-university-of-health-sciences">Western University of Health Sciences</option>
-				<option value="azusa-pacific-university-2">Azusa Pacific University</option>
-			</select>
-		</div>
-		<div class="CollegeList">
-			<br class="smallLine">			
-			<div class="collegeDropdown2">
-			<label for="collegeSelect2">My College List:</label>
-			<select id="collegeSelect2">
-				<option value=""> Find a school... </option>
-				<option value="university-of-california-berkeley">University of California, Berkeley (UC Berkeley)</option>
-				<option value="university-of-california-davis">University of California, Davis (UC Davis)</option>
-				<option value="university-of-california-irvine">University of California, Irvine (UC Irvine)</option>
-				<option value="university-of-california-los-angeles">University of California, Los Angeles (UCLA)</option>
-				<option value="university-of-california-merced">University of California, Merced (UC Merced)</option>
-				<option value="university-of-california-riverside">University of California, Riverside (UC Riverside)</option>
-				<option value="university-of-california-san-diego">University of California, San Diego (UC San Diego)</option>
-				<option value="university-of-california-san-francisco">University of California, San Francisco (UC San Francisco)</option>
-				<option value="university-of-california-santa-barbara">University of California, Santa Barbara (UC Santa Barbara)</option>
-				<option value="university-of-california-santa-cruz">University of California, Santa Cruz (UC Santa Cruz)</option>
-				<option value="california-state-university-bakersfield">California State University, Bakersfield</option>
-				<option value="california-state-university-channel-islands">California State University, Channel Islands</option>
-				<option value="california-state-university-chico">California State University, Chico</option>
-				<option value="california-state-university-dominguez-hills">California State University, Dominguez Hills</option>
-				<option value="california-state-university-east-bay">California State University, East Bay</option>
-				<option value="california-state-university-fresno">California State University, Fresno (Fresno State)</option>
-				<option value="california-state-university-fullerton">California State University, Fullerton</option>
-				<option value="california-state-polytechnic-university-humboldt">California State Polytechnic University, Humboldt (Cal Poly Humboldt)</option>
-				<option value="california-state-university-long-beach">California State University, Long Beach</option>
-				<option value="california-state-university-los-angeles">California State University, Los Angeles</option>
-				<option value="california-state-university-maritime-academy">California State University Maritime Academy</option>
-				<option value="california-state-university-monterey-bay">California State University, Monterey Bay</option>
-				<option value="california-state-university-northridge">California State University, Northridge (CSUN)</option>
-				<option value="california-state-polytechnic-university-pomona">California State Polytechnic University, Pomona (Cal Poly Pomona)</option>
-				<option value="california-state-university-sacramento">California State University, Sacramento (Sacramento State)</option>
-				<option value="california-state-university-san-bernardino">California State University, San Bernardino</option>
-				<option value="san-diego-state-university">San Diego State University</option>
-				<option value="san-francisco-state-university">San Francisco State University</option>
-				<option value="san-jose-state-university">San Jose State University</option>
-				<option value="california-polytechnic-state-university-san-luis-obispo">California Polytechnic State University, San Luis Obispo (Cal Poly SLO)</option>
-				<option value="sonoma-state-university">Sonoma State University</option>
-				<option value="california-state-university-stanislaus">California State University, Stanislaus</option>
-				<option value="california-state-university-san-marcos">California State University San Marcos</option>
-				<option value="stanford-university">Stanford University</option>
-				<option value="california-institute-of-technology">California Institute of Technology (Caltech)</option>
-				<option value="university-of-southern-california">University of Southern California (USC)</option>
-				<option value="pepperdine-university">Pepperdine University</option>
-				<option value="loyola-marymount-university">Loyola Marymount University</option>
-				<option value="university-of-san-diego">University of San Diego</option>
-				<option value="university-of-the-pacific">University of the Pacific</option>
-				<option value="santa-clara-university">Santa Clara University</option>
-				<option value="chapman-university">Chapman University</option>
-				<option value="university-of-la-verne">University of La Verne</option>
-				<option value="occidental-college">Occidental College</option>
-				<option value="claremont-colleges">Claremont Colleges:</option>
-				<option value="pomona-college">Pomona College</option>
-				<option value="claremont-mckenna-college">Claremont McKenna College</option>
-				<option value="harvey-mudd-college">Harvey Mudd College</option>
-				<option value="pitzer-college">Pitzer College</option>
-				<option value="scripps-college">Scripps College</option>
-				<option value="claremont-graduate-university">Claremont Graduate University</option>
-				<option value="biola-university">Biola University</option>
-				<option value="azusa-pacific-university">Azusa Pacific University</option>
-				<option value="point-loma-nazarene-university">Point Loma Nazarene University</option>
-				<option value="california-baptist-university">California Baptist University</option>
-				<option value="westmont-college">Westmont College</option>
-				<option value="dominican-university-of-california">Dominican University of California</option>
-				<option value="whittier-college">Whittier College</option>
-				<option value="mills-college">Mills College (historic; merged with Northeastern University)</option>
-				<option value="university-of-redlands">University of Redlands</option>
-				<option value="humboldt-state">Humboldt State (listed above as Cal Poly Humboldt)</option>
-				<option value="pepperdine-university-2">Pepperdine University</option>
-				<option value="alliant-international-university">Alliant International University</option>
-				<option value="thomas-aquinas-college">Thomas Aquinas College (CA campus)</option>
-				<option value="holy-names-university">Holy Names University (closed 2023; historical)</option>
-				<option value="university-of-san-francisco">University of San Francisco</option>
-				<option value="saint-marys-college-of-california">Saint Mary’s College of California</option>
-				<option value="california-college-of-the-arts">California College of the Arts</option>
-				<option value="mount-saint-marys-university">Mount Saint Mary’s University (Los Angeles)</option>
-				<option value="mills-college-northeastern">Mills College at Northeastern (see note)</option>
-				<option value="samuel-merritt-university">Samuel Merritt University</option>
-				<option value="keck-graduate-institute">Keck Graduate Institute</option>
-				<option value="soka-university-of-america">Soka University of America</option>
-				<option value="vanguard-university-of-southern-california">Vanguard University of Southern California</option>
-				<option value="western-university-of-health-sciences">Western University of Health Sciences</option>
-				<option value="azusa-pacific-university-2">Azusa Pacific University</option>
-			</select>
-						<button id="btn">Add Item</button>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Colleges | Transfer Assist</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(to right, rgb(70, 3, 110), rgb(139, 53, 197));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-		</div>
+        h1 {
+            font-size: 36px;
+            margin: 30px 0 20px;
+            color: rgb(70, 3, 110);
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
 
-			<ol id="myList">
-			</ol>
-		</div>
-		    </section>
-	    <footer>
-		</footer>
-				<script src="script.js"></script>
-	</body>
+        h2 {
+            font-size: 28px;
+            margin: 25px 0 15px;
+            color: rgb(70, 3, 110);
+            font-weight: 600;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.6;
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        #content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .title {
+            padding-left: 20px;
+            font-size: 24px;
+            margin-top: 10px;
+            color: rgb(0, 0, 0);
+            text-align: left;
+            font-weight: 700;
+        }
+
+        h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        footer {
+            font-style: italic;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 1px solid #ddd;
+            color: #777;
+            background-color: #f0f0f0;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 10px 20px;
+        }
+
+        nav a {
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: rgb(139, 53, 197);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            background-color: rgb(59, 3, 96);
+            transform: translateY(-2px);
+        }
+
+        nav a.active {
+            background-color: rgb(70, 3, 110);
+        }
+
+        .section {
+            margin: 60px 0;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgb(139, 53, 197);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 99;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-indicator:hover {
+            background: rgb(59, 3, 96);
+            transform: translateY(-5px);
+        }
+
+        /* Form styling */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: rgb(70, 3, 110);
+            font-size: 18px;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e8e2ff;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: "Open Sans", sans-serif;
+            background-color: #f9f7ff;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: rgb(139, 53, 197);
+            box-shadow: 0 0 0 3px rgba(139, 53, 197, 0.2);
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(to right, rgb(70, 3, 110), rgb(139, 53, 197));
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .button-secondary {
+            background: white;
+            color: rgb(70, 3, 110);
+            border: 2px solid rgb(139, 53, 197);
+        }
+
+        .button-secondary:hover {
+            background: #f9f7ff;
+        }
+
+        /* College list styling */
+        .college-list {
+            margin-top: 30px;
+        }
+
+        .college-item {
+            background: #f9f7ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid rgb(139, 53, 197);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+
+        .college-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .college-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .college-name {
+            font-weight: 600;
+            color: rgb(70, 3, 110);
+            font-size: 18px;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #ff4757;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .empty-list-message {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-style: italic;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        /* Canvas particle effect styling */
+        #bg-fx {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        body > *:not(#bg-fx) { 
+            position: relative; 
+            z-index: 1; 
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            nav a {
+                font-size: 16px;
+                padding: 8px 15px;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <nav>
+            <span class="title">Transfer Assist</span>
+            <a href="index.html">Home</a>
+            <a href="MyColleges.html" class="active">My Colleges</a>
+            <a href="Schedule.html">Schedule</a>
+        </nav>
+    </div>
+
+    <div id="content">
+        <div class="section" id="college-selection-section">
+            <h1 class="visible">My Colleges</h1>
+            <p>Select your current college and add target colleges to create your personalized transfer plan.</p>
+            
+            <div class="form-group">
+                <label for="collegeSelect">Current College:</label>
+                <select id="collegeSelect">
+                    <option value="">-- Please choose a college --</option>
+                    <option value="university-of-california-berkeley">University of California, Berkeley (UC Berkeley)</option>
+                    <option value="university-of-california-davis">University of California, Davis (UC Davis)</option>
+                    <option value="university-of-california-irvine">University of California, Irvine (UC Irvine)</option>
+                    <option value="university-of-california-los-angeles">University of California, Los Angeles (UCLA)</option>
+                    <option value="university-of-california-merced">University of California, Merced (UC Merced)</option>
+                    <option value="university-of-california-riverside">University of California, Riverside (UC Riverside)</option>
+                    <option value="university-of-california-san-diego">University of California, San Diego (UC San Diego)</option>
+                    <option value="university-of-california-san-francisco">University of California, San Francisco (UC San Francisco)</option>
+                    <option value="university-of-california-santa-barbara">University of California, Santa Barbara (UC Santa Barbara)</option>
+                    <option value="university-of-california-santa-cruz">University of California, Santa Cruz (UC Santa Cruz)</option>
+                    <option value="california-state-university-bakersfield">California State University, Bakersfield</option>
+                    <option value="california-state-university-channel-islands">California State University, Channel Islands</option>
+                    <option value="california-state-university-chico">California State University, Chico</option>
+                    <option value="california-state-university-dominguez-hills">California State University, Dominguez Hills</option>
+                    <option value="california-state-university-east-bay">California State University, East Bay</option>
+                    <option value="california-state-university-fresno">California State University, Fresno (Fresno State)</option>
+                    <option value="california-state-university-fullerton">California State University, Fullerton</option>
+                    <option value="california-state-polytechnic-university-humboldt">California State Polytechnic University, Humboldt (Cal Poly Humboldt)</option>
+                    <option value="california-state-university-long-beach">California State University, Long Beach</option>
+                    <option value="california-state-university-los-angeles">California State University, Los Angeles</option>
+                    <option value="california-state-university-maritime-academy">California State University Maritime Academy</option>
+                    <option value="california-state-university-monterey-bay">California State University, Monterey Bay</option>
+                    <option value="california-state-university-northridge">California State University, Northridge (CSUN)</option>
+                    <option value="california-state-polytechnic-university-pomona">California State Polytechnic University, Pomona (Cal Poly Pomona)</option>
+                    <option value="california-state-university-sacramento">California State University, Sacramento (Sacramento State)</option>
+                    <option value="california-state-university-san-bernardino">California State University, San Bernardino</option>
+                    <option value="san-diego-state-university">San Diego State University</option>
+                    <option value="san-francisco-state-university">San Francisco State University</option>
+                    <option value="san-jose-state-university">San Jose State University</option>
+                    <option value="california-polytechnic-state-university-san-luis-obispo">California Polytechnic State University, San Luis Obispo (Cal Poly SLO)</option>
+                    <option value="sonoma-state-university">Sonoma State University</option>
+                    <option value="california-state-university-stanislaus">California State University, Stanislaus</option>
+                    <option value="california-state-university-san-marcos">California State University San Marcos</option>
+                    <option value="stanford-university">Stanford University</option>
+                    <option value="california-institute-of-technology">California Institute of Technology (Caltech)</option>
+                    <option value="university-of-southern-california">University of Southern California (USC)</option>
+                    <option value="pepperdine-university">Pepperdine University</option>
+                    <option value="loyola-marymount-university">Loyola Marymount University</option>
+                    <option value="university-of-san-diego">University of San Diego</option>
+                    <option value="university-of-the-pacific">University of the Pacific</option>
+                    <option value="santa-clara-university">Santa Clara University</option>
+                    <option value="chapman-university">Chapman University</option>
+                    <option value="university-of-la-verne">University of La Verne</option>
+                    <option value="occidental-college">Occidental College</option>
+                    <option value="claremont-colleges">Claremont Colleges:</option>
+                    <option value="pomona-college">Pomona College</option>
+                    <option value="claremont-mckenna-college">Claremont McKenna College</option>
+                    <option value="harvey-mudd-college">Harvey Mudd College</option>
+                    <option value="pitzer-college">Pitzer College</option>
+                    <option value="scripps-college">Scripps College</option>
+                    <option value="claremont-graduate-university">Claremont Graduate University</option>
+                    <option value="biola-university">Biola University</option>
+                    <option value="azusa-pacific-university">Azusa Pacific University</option>
+                    <option value="point-loma-nazarene-university">Point Loma Nazarene University</option>
+                    <option value="california-baptist-university">California Baptist University</option>
+                    <option value="westmont-college">Westmont College</option>
+                    <option value="dominican-university-of-california">Dominican University of California</option>
+                    <option value="whittier-college">Whittier College</option>
+                    <option value="mills-college">Mills College (historic; merged with Northeastern University)</option>
+                    <option value="university-of-redlands">University of Redlands</option>
+                    <option value="humboldt-state">Humboldt State (listed above as Cal Poly Humboldt)</option>
+                    <option value="pepperdine-university-2">Pepperdine University</option>
+                    <option value="alliant-international-university">Alliant International University</option>
+                    <option value="thomas-aquinas-college">Thomas Aquinas College (CA campus)</option>
+                    <option value="holy-names-university">Holy Names University (closed 2023; historical)</option>
+                    <option value="university-of-san-francisco">University of San Francisco</option>
+                    <option value="saint-marys-college-of-california">Saint Mary's College of California</option>
+                    <option value="california-college-of-the-arts">California College of the Arts</option>
+                    <option value="mount-saint-marys-university">Mount Saint Mary's University (Los Angeles)</option>
+                    <option value="mills-college-northeastern">Mills College at Northeastern (see note)</option>
+                    <option value="samuel-merritt-university">Samuel Merritt University</option>
+                    <option value="keck-graduate-institute">Keck Graduate Institute</option>
+                    <option value="soka-university-of-america">Soka University of America</option>
+                    <option value="vanguard-university-of-southern-california">Vanguard University of Southern California</option>
+                    <option value="western-university-of-health-sciences">Western University of Health Sciences</option>
+                    <option value="azusa-pacific-university-2">Azusa Pacific University</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="collegeSelect2">Add Target College:</label>
+                <select id="collegeSelect2">
+                    <option value="">-- Find a school --</option>
+                    <option value="university-of-california-berkeley">University of California, Berkeley (UC Berkeley)</option>
+                    <option value="university-of-california-davis">University of California, Davis (UC Davis)</option>
+                    <option value="university-of-california-irvine">University of California, Irvine (UC Irvine)</option>
+                    <option value="university-of-california-los-angeles">University of California, Los Angeles (UCLA)</option>
+                    <option value="university-of-california-merced">University of California, Merced (UC Merced)</option>
+                    <option value="university-of-california-riverside">University of California, Riverside (UC Riverside)</option>
+                    <option value="university-of-california-san-diego">University of California, San Diego (UC San Diego)</option>
+                    <option value="university-of-california-san-francisco">University of California, San Francisco (UC San Francisco)</option>
+                    <option value="university-of-california-santa-barbara">University of California, Santa Barbara (UC Santa Barbara)</option>
+                    <option value="university-of-california-santa-cruz">University of California, Santa Cruz (UC Santa Cruz)</option>
+                    <option value="california-state-university-bakersfield">California State University, Bakersfield</option>
+                    <option value="california-state-university-channel-islands">California State University, Channel Islands</option>
+                    <option value="california-state-university-chico">California State University, Chico</option>
+                    <option value="california-state-university-dominguez-hills">California State University, Dominguez Hills</option>
+                    <option value="california-state-university-east-bay">California State University, East Bay</option>
+                    <option value="california-state-university-fresno">California State University, Fresno (Fresno State)</option>
+                    <option value="california-state-university-fullerton">California State University, Fullerton</option>
+                    <option value="california-state-polytechnic-university-humboldt">California State Polytechnic University, Humboldt (Cal Poly Humboldt)</option>
+                    <option value="california-state-university-long-beach">California State University, Long Beach</option>
+                    <option value="california-state-university-los-angeles">California State University, Los Angeles</option>
+                    <option value="california-state-university-maritime-academy">California State University Maritime Academy</option>
+                    <option value="california-state-university-monterey-bay">California State University, Monterey Bay</option>
+                    <option value="california-state-university-northridge">California State University, Northridge (CSUN)</option>
+                    <option value="california-state-polytechnic-university-pomona">California State Polytechnic University, Pomona (Cal Poly Pomona)</option>
+                    <option value="california-state-university-sacramento">California State University, Sacramento (Sacramento State)</option>
+                    <option value="california-state-university-san-bernardino">California State University, San Bernardino</option>
+                    <option value="san-diego-state-university">San Diego State University</option>
+                    <option value="san-francisco-state-university">San Francisco State University</option>
+                    <option value="san-jose-state-university">San Jose State University</option>
+                    <option value="california-polytechnic-state-university-san-luis-obispo">California Polytechnic State University, San Luis Obispo (Cal Poly SLO)</option>
+                    <option value="sonoma-state-university">Sonoma State University</option>
+                    <option value="california-state-university-stanislaus">California State University, Stanislaus</option>
+                    <option value="california-state-university-san-marcos">California State University San Marcos</option>
+                    <option value="stanford-university">Stanford University</option>
+                    <option value="california-institute-of-technology">California Institute of Technology (Caltech)</option>
+                    <option value="university-of-southern-california">University of Southern California (USC)</option>
+                    <option value="pepperdine-university">Pepperdine University</option>
+                    <option value="loyola-marymount-university">Loyola Marymount University</option>
+                    <option value="university-of-san-diego">University of San Diego</option>
+                    <option value="university-of-the-pacific">University of the Pacific</option>
+                    <option value="santa-clara-university">Santa Clara University</option>
+                    <option value="chapman-university">Chapman University</option>
+                    <option value="university-of-la-verne">University of La Verne</option>
+                    <option value="occidental-college">Occidental College</option>
+                    <option value="claremont-colleges">Claremont Colleges:</option>
+                    <option value="pomona-college">Pomona College</option>
+                    <option value="claremont-mckenna-college">Claremont McKenna College</option>
+                    <option value="harvey-mudd-college">Harvey Mudd College</option>
+                    <option value="pitzer-college">Pitzer College</option>
+                    <option value="scripps-college">Scripps College</option>
+                    <option value="claremont-graduate-university">Claremont Graduate University</option>
+                    <option value="biola-university">Biola University</option>
+                    <option value="azusa-pacific-university">Azusa Pacific University</option>
+                    <option value="point-loma-nazarene-university">Point Loma Nazarene University</option>
+                    <option value="california-baptist-university">California Baptist University</option>
+                    <option value="westmont-college">Westmont College</option>
+                    <option value="dominican-university-of-california">Dominican University of California</option>
+                    <option value="whittier-college">Whittier College</option>
+                    <option value="mills-college">Mills College (historic; merged with Northeastern University)</option>
+                    <option value="university-of-redlands">University of Redlands</option>
+                    <option value="humboldt-state">Humboldt State (listed above as Cal Poly Humboldt)</option>
+                    <option value="pepperdine-university-2">Pepperdine University</option>
+                    <option value="alliant-international-university">Alliant International University</option>
+                    <option value="thomas-aquinas-college">Thomas Aquinas College (CA campus)</option>
+                    <option value="holy-names-university">Holy Names University (closed 2023; historical)</option>
+                    <option value="university-of-san-francisco">University of San Francisco</option>
+                    <option value="saint-marys-college-of-california">Saint Mary's College of California</option>
+                    <option value="california-college-of-the-arts">California College of the Arts</option>
+                    <option value="mount-saint-marys-university">Mount Saint Mary's University (Los Angeles)</option>
+                    <option value="mills-college-northeastern">Mills College at Northeastern (see note)</option>
+                    <option value="samuel-merritt-university">Samuel Merritt University</option>
+                    <option value="keck-graduate-institute">Keck Graduate Institute</option>
+                    <option value="soka-university-of-america">Soka University of America</option>
+                    <option value="vanguard-university-of-southern-california">Vanguard University of Southern California</option>
+                    <option value="western-university-of-health-sciences">Western University of Health Sciences</option>
+                    <option value="azusa-pacific-university-2">Azusa Pacific University</option>
+                </select>
+            </div>
+            
+            <button id="btn" class="button">Add to My College List</button>
+        </div>
+
+        <div class="section" id="college-list-section">
+            <h2>My College List</h2>
+            <div class="college-list" id="myList">
+                <div class="empty-list-message">
+                    Your college list is empty. Add colleges using the form above.
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="plan-button" class="button">Plan in MyPlan</button>
+                <button id="clear-button" class="button button-secondary">Clear All Colleges</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="scroll-indicator" id="scroll-indicator">
+        ↑
+    </div>
+    
+    <footer>
+        <p>Transfer Assist - Your pathway to successful college transfer</p>
+    </footer>
+
+    <!-- Cursor particle canvas -->
+    <canvas id="bg-fx" aria-hidden="true"></canvas>
+
+    <script>
+        // Enhanced particle effect with connecting lines
+        (() => {
+            const canvas = document.getElementById('bg-fx');
+            const ctx = canvas.getContext('2d');
+            let width, height, dpr;
+            const particles = [];
+            const MAX_PARTICLES = 180;
+            const SPAWN_PER_MOVE = 6;
+            const FRICTION = 0.985;
+            const FADE = 0.018;
+            const SIZE = [2, 5];
+            const SPEED = [0.4, 1.6];
+            const MAX_CONNECTION_DISTANCE = 150;
+            let lastSpawn = 0;
+
+            function resize() {
+                dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+                width = canvas.clientWidth = window.innerWidth;
+                height = canvas.clientHeight = window.innerHeight;
+                canvas.width = Math.floor(width * dpr);
+                canvas.height = Math.floor(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            function rand(a, b) { return a + Math.random() * (b - a); }
+
+            function spawn(x, y, n) {
+                for (let i = 0; i < n; i++) {
+                    if (particles.length >= MAX_PARTICLES) particles.shift();
+                    const ang = Math.random() * Math.PI * 2;
+                    const spd = rand(SPEED[0], SPEED[1]);
+                    particles.push({
+                        x, y,
+                        vx: Math.cos(ang) * spd,
+                        vy: Math.sin(ang) * spd,
+                        r: rand(SIZE[0], SIZE[1]),
+                        a: 1.0,
+                        connections: []
+                    });
+                }
+            }
+
+            function calculateConnections() {
+                // Reset connections
+                particles.forEach(p => p.connections = []);
+                
+                // Calculate new connections
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p1 = particles[i];
+                        const p2 = particles[j];
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < MAX_CONNECTION_DISTANCE) {
+                            // Calculate connection strength based on distance and particle alpha
+                            const strength = (1 - distance / MAX_CONNECTION_DISTANCE) * Math.min(p1.a, p2.a);
+                            
+                            if (strength > 0.05) { // Only create visible connections
+                                p1.connections.push({
+                                    target: p2,
+                                    distance: distance,
+                                    strength: strength
+                                });
+                                p2.connections.push({
+                                    target: p1,
+                                    distance: distance,
+                                    strength: strength
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            function step() {
+                ctx.clearRect(0, 0, width, height);
+                
+                // Update particle positions and fade
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.vx *= FRICTION; p.vy *= FRICTION;
+                    p.x += p.vx; p.y += p.vy;
+                    p.a -= FADE;
+                    if (p.a <= 0 || p.x < -20 || p.y < -20 || p.x > width + 20 || p.y > height + 20) {
+                        particles.splice(i, 1);
+                        continue;
+                    }
+                }
+                
+                // Calculate connections between particles
+                calculateConnections();
+                
+                // Draw connections first (so particles appear on top)
+                particles.forEach(p => {
+                    p.connections.forEach(conn => {
+                        if (conn.target.a > 0) {
+                            const alpha = conn.strength * 0.7;
+                            ctx.globalAlpha = alpha;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(conn.target.x, conn.target.y);
+                            ctx.strokeStyle = '#7a5fb5';
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    });
+                });
+                
+                // Draw particles
+                particles.forEach(p => {
+                    // Particle fill
+                    ctx.globalAlpha = p.a * 0.9;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.fillStyle = '#7a5fb5';
+                    ctx.fill();
+
+                    // Particle glow
+                    ctx.globalAlpha = p.a * 0.25;
+                    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+                    g.addColorStop(0, '#7a5fb5');
+                    g.addColorStop(1, 'rgba(122,95,181,0)');
+                    ctx.fillStyle = g;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(step);
+            }
+
+            function onMove(e) {
+                const now = performance.now();
+                if (now - lastSpawn < 12) return; // throttle spawn rate
+                lastSpawn = now;
+                const x = ('touches' in e) ? e.touches[0].clientX : e.clientX;
+                const y = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+                spawn(x, y, SPAWN_PER_MOVE);
+            }
+
+            addEventListener('mousemove', onMove, { passive: true });
+            addEventListener('touchmove', onMove, { passive: true });
+            addEventListener('resize', resize);
+            resize();
+            requestAnimationFrame(step);
+        })();
+
+        // Scroll animation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            const collegeItems = document.querySelectorAll('.college-item');
+            const scrollIndicator = document.getElementById('scroll-indicator');
+            
+            // Function to check if element is in viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+                );
+            }
+            
+            // Function to handle scroll events
+            function handleScroll() {
+                // Animate sections
+                sections.forEach(section => {
+                    if (isInViewport(section)) {
+                        section.classList.add('visible');
+                    }
+                });
+                
+                // Animate college items with delay
+                collegeItems.forEach((item, index) => {
+                    if (isInViewport(item)) {
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, 300 + (index * 100));
+                    }
+                });
+                
+                // Show scroll indicator when not at top
+                if (window.scrollY > 300) {
+                    scrollIndicator.classList.add('visible');
+                } else {
+                    scrollIndicator.classList.remove('visible');
+                }
+            }
+            
+            // Scroll to top function
+            scrollIndicator.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Listen for scroll events
+            window.addEventListener('scroll', handleScroll);
+            
+            // Initial check on page load
+            handleScroll();
+        });
+
+        // College list functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById("btn");
+            const input = document.getElementById("collegeSelect2");
+            const listContainer = document.getElementById("myList");
+            const planButton = document.getElementById("plan-button");
+            const clearButton = document.getElementById("clear-button");
+            let myColleges = [];
+
+            // Load saved colleges from localStorage if available
+            if (localStorage.getItem('ta.selectedUnis')) {
+                myColleges = JSON.parse(localStorage.getItem('ta.selectedUnis'));
+                renderCollegeList();
+            }
+
+            // College search and adder
+            btn.addEventListener("click", () => {
+                const value = input.value.trim();
+                const displayText = input.options[input.selectedIndex].text;
+                
+                if (value && !myColleges.includes(displayText)) {
+                    myColleges.push(displayText);
+                    renderCollegeList();
+                    saveColleges();
+                    input.value = "";
+                } else if (myColleges.includes(displayText)) {
+                    alert("This college is already in your list.");
+                } else {
+                    alert("Please select a college to add.");
+                }
+            });
+
+            // Render the college list
+            function renderCollegeList() {
+                if (myColleges.length === 0) {
+                    listContainer.innerHTML = '<div class="empty-list-message">Your college list is empty. Add colleges using the form above.</div>';
+                    return;
+                }
+
+                listContainer.innerHTML = '';
+                myColleges.forEach((college, index) => {
+                    const collegeItem = document.createElement("div");
+                    collegeItem.className = "college-item";
+                    collegeItem.innerHTML = `
+                        <span class="college-name">${college}</span>
+                        <button class="remove-btn" data-index="${index}">×</button>
+                    `;
+                    listContainer.appendChild(collegeItem);
+                    
+                    // Add event listener for remove button
+                    collegeItem.querySelector('.remove-btn').addEventListener('click', function() {
+                        const indexToRemove = parseInt(this.getAttribute('data-index'));
+                        myColleges.splice(indexToRemove, 1);
+                        renderCollegeList();
+                        saveColleges();
+                    });
+                });
+                
+                // Trigger animations for new items
+                setTimeout(() => {
+                    document.querySelectorAll('.college-item').forEach((item, index) => {
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, 300 + (index * 100));
+                    });
+                }, 100);
+            }
+
+            // Save colleges to localStorage
+            function saveColleges() {
+                localStorage.setItem('ta.selectedUnis', JSON.stringify(myColleges));
+            }
+
+            // Plan button functionality
+            planButton.addEventListener('click', function() {
+                const currentCollege = document.getElementById('collegeSelect').value;
+                if (!currentCollege) {
+                    alert("Please select your current college before planning.");
+                    return;
+                }
+                
+                if (myColleges.length === 0) {
+                    alert("Please add at least one target college to your list before planning.");
+                    return;
+                }
+                
+                localStorage.setItem('ta.currentUni', currentCollege);
+                localStorage.setItem('ta.selectedUnis', JSON.stringify(myColleges));
+                window.location.href = 'Schedule.html';
+            });
+
+            // Clear button functionality
+            clearButton.addEventListener('click', function() {
+                if (confirm("Are you sure you want to clear all colleges from your list?")) {
+                    myColleges = [];
+                    renderCollegeList();
+                    saveColleges();
+                }
+            });
+
+            // Load university data from JSON file
+            fetch("university.json")
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    const selectElement1 = document.getElementById("collegeSelect");
+                    const selectElement2 = document.getElementById("collegeSelect2");
+
+                    data.forEach((college) => {
+                        // Add to first dropdown
+                        const newOption1 = document.createElement("option");
+                        newOption1.textContent = college.name;
+                        newOption1.value = college.name;
+                        selectElement1.appendChild(newOption1);
+                        
+                        // Add to second dropdown
+                        const newOption2 = document.createElement("option");
+                        newOption2.textContent = college.name;
+                        newOption2.value = college.name;
+                        selectElement2.appendChild(newOption2);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Error fetching university data:", error);
+                });
+        });
+    </script>
+</body>
 </html>

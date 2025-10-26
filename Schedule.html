@@ -1,73 +1,1366 @@
 <!DOCTYPE html>
-	<head>
-		<meta charset="utf-8">
-		<title>MyColleges | Transfer Assist</title>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="styles.css">
-	</head>
-	<body>
-		<div class="header">
-			<nav>
-				<span class="title">Transfer Assist</span>
-				<a href="index.html">Home</a>
-				<a href="MyColleges.html">My Colleges</a>
-				<a href="Schedule.html" class="Schedule">Schedules</a>
-			</nav>
-		</div>
-		<h1>Schedule </h1>
-		<div class="majorDropdown">
-			      <label for="dropdown">Major:</label>
-			<select id="dropdown">
-				<option value=""  > Select major... </option>
-			</select>
-		</div>		
-		<script>
-			fetch("university.json")
-				.then(response => response.json())
-				.then(data => {
-					const select = document.getElementById("dropdown");
-					if (!select) {
-						console.error('No select element with id "dropdown" found');
-						return;
-					}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule | Transfer Assist</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <style>
+        footer {
+            text-decoration-color: #333;
+            background-color: rgb(214, 152, 255);
+        }
 
-					// major array
-					const majorsSet = new Set();
-					majorArray=[]
-					const universities = data.universities || [];
-					universities.forEach(u => {
-						if (Array.isArray(u.majors)) {
-							u.majors.forEach(m => {
-								for (let i=0;i<majorArray.length;i++){
-									if (u.majors[i] === m ) break;
-								}
-								if (m && typeof m === 'string') {
-									majorsSet.add(m.trim());
-									majorArray.push(m.trim());
-								}
-							});
-						}
-					});
+        .cover {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 24px;
+        padding-top: 20px;
+        padding-bottom: 40px;
+        }
 
-					// Clear existing options except the placeholder
-					// (keep the first placeholder option if present)
-					const placeholder = select.querySelector('option');
-					select.innerHTML = '';
-					if (placeholder) select.appendChild(placeholder);
+        /* animated down-arrow that fades in and “jumps” */
+        .jump-arrow {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 56px;
+        margin: 8px 0 10px;
+        opacity: 0;
+        transform: translateY(-6px);
+        transition: opacity 800ms ease, transform 800ms ease;
+        }
 
-					// Sort and append options
-					Array.from(majorsSet).sort((a,b) => a.localeCompare(b)).forEach(major => {
-						const option = document.createElement('option');
-						option.value = major;
-						option.textContent = major;
-						select.appendChild(option);
-					});
-				})
-				.catch(err => console.error('error fetching/unpacking university.json:', err));
-		</script>
-            </section>
-        <footer>
-        </footer>
-        <script src="script.js"></script>
-    </body>
+        .jump-arrow span {
+        font-size: 34px;
+        line-height: 1;
+        animation: arrow-bounce 1200ms ease-in-out infinite;
+        user-select: none;
+        cursor: pointer;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+        color: rgb(96, 5, 121);
+        }
+
+        .jump-arrow.visible {
+        opacity: 1;
+        transform: translateY(0);
+        }
+
+        @keyframes arrow-bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(8px); }
+        }
+
+        /* keep things tidy on small screens */
+        @media (max-width: 768px) {
+        .cover { gap: 16px; }
+        .jump-arrow { height: 48px; }
+        .jump-arrow span { font-size: 30px; }
+        }
+
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.6;
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        #content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(to right, rgb(96, 5, 121), rgb(139, 53, 197));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .title {
+            padding-left: 20px;
+            font-size: 24px;
+            margin-top: 10px;
+            color: white;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 20px 0;
+            color: rgb(96, 5, 121);
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 25px 0 15px;
+            color: rgb(96, 5, 121);
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        footer {
+            font-style: italic;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+            color: #777;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 10px 20px;
+        }
+
+        nav a {
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        nav a.Schedule {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .majorDropdown {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin: 20px 0;
+        }
+
+        .majorDropdown label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: rgb(96, 5, 121);
+            font-weight: 600;
+        }
+
+        .majorDropdown select {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background-color: #f9f9f9;
+            transition: all 0.3s;
+        }
+
+        .majorDropdown select:focus {
+            outline: none;
+            border-color: rgb(139, 53, 197);
+            box-shadow: 0 0 0 2px rgba(139, 53, 197, 0.2);
+        }
+
+        .input-section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .input-section input[type="text"] {
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            width: 100%;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .input-section input[type="text"]:focus {
+            outline: none;
+            border-color: rgb(139, 53, 197);
+            box-shadow: 0 0 0 2px rgba(139, 53, 197, 0.2);
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: rgb(139, 53, 197);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: rgb(96, 5, 121);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .app-container {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 30px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            background-color: white;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .app-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .app-header {
+            background: linear-gradient(to right, rgb(96, 5, 121), rgb(139, 53, 197));
+            color: white;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .app-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .app-control-btn {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .close { background-color: #ff5f57; }
+        .minimize { background-color: #ffbd2e; }
+        .maximize { background-color: #28ca42; }
+
+        .app-placeholder {
+            padding: 40px 25px;
+            text-align: center;
+        }
+
+        .app-placeholder h3 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: rgb(96, 5, 121);
+        }
+
+        .app-placeholder p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-item {
+            background-color: #f9f7ff;
+            padding: 25px;
+            border-radius: 8px;
+            border-left: 4px solid rgb(139, 53, 197);
+            transition: all 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .feature-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .feature-item strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: rgb(96, 5, 121);
+        }
+
+        .feature-item p {
+            color: #666;
+            font-size: 15px;
+        }
+
+        .status-bar {
+            background-color: #f5f5f5;
+            color: #777;
+            padding: 10px 25px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 30px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .gallery-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-slide {
+            min-width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #f9f7ff, #e8e2ff);
+            text-align: center;
+        }
+
+        .gallery-slide h4 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: rgb(96, 5, 121);
+        }
+
+        .gallery-slide p {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(139, 53, 197, 0.8);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .gallery-nav:hover {
+            background: rgb(96, 5, 121);
+        }
+
+        .gallery-prev {
+            left: 15px;
+        }
+
+        .gallery-next {
+            right: 15px;
+        }
+
+        .gallery-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gallery-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gallery-indicator.active {
+            background: rgb(139, 53, 197);
+        }
+
+        #quickCourseList {
+            margin-top: 15px;
+        }
+
+        .course-item {
+            padding: 10px 15px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .course-item button {
+            padding: 5px 10px;
+            font-size: 12px;
+            background: #ff5f57;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgb(139, 53, 197);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 99;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-indicator:hover {
+            background: rgb(96, 5, 121);
+            transform: translateY(-5px);
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .form-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: rgb(96, 5, 121);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: rgb(139, 53, 197);
+            box-shadow: 0 0 0 2px rgba(139, 53, 197, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+        }
+
+        .form-actions button {
+            padding: 12px 25px;
+        }
+
+        .form-actions button[type="reset"] {
+            background-color: #6c757d;
+        }
+
+        .form-actions button[type="reset"]:hover {
+            background-color: #5a6268;
+        }
+
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            nav a {
+                font-size: 16px;
+                padding: 8px 15px;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-nav {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .form-actions button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <span class="title">Transfer Assist</span>
+            <a href="index.html">Home</a>
+            <a href="MyColleges.html">My Colleges</a>
+            <a href="Schedule.html" class="Schedule">Schedule</a>
+        </nav>
+    </header>
+
+    <div id="content">
+        <section class="cover" id="cover">
+            <h1>Schedule Your Transfer Journey</h1>
+            
+            <div class="majorDropdown">
+            <label for="dropdown">Select Your Major:</label>
+            <select id="dropdown">
+                <option value="">Select major...</option>
+            </select>
+            </div>
+            
+            <div class="input-section">
+            <h2>Quick Course Addition</h2>
+            <p>Add courses to your plan before launching the full application:</p>
+            <input type="text" id="courseInput" placeholder="Enter course name...">
+            <button id="addCourseBtn">Add Course</button>
+            <div id="quickCourseList"></div>
+            </div>
+        </section>
+
+        <!-- add this animated arrow cue immediately before the application section -->
+        <div class="jump-arrow" id="app-scroll-cue" aria-hidden="true" title="Scroll down">
+            <span>↓</span>
+        </div>
+        
+        <h2>Transfer Planner Application</h2>
+        <p>Launch the full desktop-style application to manage your transfer plan with AI assistance, Gantt charts, and detailed scheduling.</p>
+        
+        <div class="app-container" id="application-section">
+            <div class="app-header">
+                <div>Transfer Assist - AI-Powered Course Planner</div>
+                <div class="app-controls">
+                    <div class="app-control-btn close"></div>
+                    <div class="app-control-btn minimize"></div>
+                    <div class="app-control-btn maximize"></div>
+                </div>
+            </div>
+            
+            <div id="appContent">
+                <div class="app-placeholder">
+                    <h3>Transfer Planning Application</h3>
+                    <p>This application helps you plan your college transfer journey with AI-powered course suggestions, Gantt chart visualization, and comprehensive scheduling tools.</p>
+                    
+                    <!-- Feature Gallery -->
+                    <div class="gallery-container">
+                        <div class="gallery-track">
+                            <div class="gallery-slide">
+                                <h4>AI Course Suggestions</h4>
+                                <p>Get personalized course recommendations based on your target universities and major.</p>
+                            </div>
+                            <div class="gallery-slide">
+                                <h4>Interactive Gantt Charts</h4>
+                                <p>Visualize your academic timeline with draggable course schedules.</p>
+                            </div>
+                            <div class="gallery-slide">
+                                <h4>University Data Management</h4>
+                                <p>Access comprehensive database of universities and their requirements.</p>
+                            </div>
+                            <div class="gallery-slide">
+                                <h4>Progress Tracking</h4>
+                                <p>Monitor your progress toward transfer requirements and deadlines.</p>
+                            </div>
+                        </div>
+                        <button class="gallery-nav gallery-prev">❮</button>
+                        <button class="gallery-nav gallery-next">❯</button>
+                        <div class="gallery-indicators">
+                            <div class="gallery-indicator active"></div>
+                            <div class="gallery-indicator"></div>
+                            <div class="gallery-indicator"></div>
+                            <div class="gallery-indicator"></div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="location.href='MyPlan.html'" id="launch-app-btn"><a style="color: white; text-decoration: none;">Launch Application</a></button>
+                </div>
+            </div>
+            
+            <div class="status-bar">
+                <div>Ready to launch Transfer Planner</div>
+                <div>Python Application</div>
+            </div>
+        </div>
+
+        <!-- Form that appears after scrolling -->
+        <div class="form-container" id="contact-form">
+            <h2>Get Started With Your Transfer Plan</h2>
+            <p>Fill out this form to receive personalized guidance for your transfer journey.</p>
+            
+            <form id="transfer-form" action="javascript:void(0);">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="current-college">Current College</label>
+                    <input type="text" id="current-college" name="current-college">
+                </div>
+                
+                <div class="form-group">
+                    <label for="target-college">Target Transfer College</label>
+                    <input type="text" id="target-college" name="target-college">
+                </div>
+                
+                <div class="form-group">
+                    <label for="major">Intended Major</label>
+                    <select id="form-major" name="major">
+                        <option value="">Select your major</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="timeline">Expected Transfer Timeline</label>
+                    <select id="timeline" name="timeline">
+                        <option value="">Select timeline</option>
+                        <option value="1-semester">1 Semester</option>
+                        <option value="1-year">1 Year</option>
+                        <option value="2-years">2 Years</option>
+                        <option value="3-plus-years">3+ Years</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="questions">Questions or Specific Needs</label>
+                    <textarea id="questions" name="questions" placeholder="Tell us about your specific transfer goals or any questions you have..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="reset">Reset Form</button>
+                    <button type="submit">Submit Information</button>
+                </div>
+            </form>
+            
+            <div class="success-message" id="success-message">
+                Thank you for your submission! We'll be in touch soon to help with your transfer journey.
+            </div>
+        </div>
+    </div>
+    
+    <div class="scroll-indicator" id="scroll-indicator">
+        ↓
+    </div>
+    
+    <footer>
+        Our Main Developers:
+        <table>
+            <ul>
+                <li> Hanh Du Tran </li>
+                <li> NIcholas Tyr </li>
+                <li> Man fung Zhuo</li>
+            </ul>
+        </table>
+
+        <p>Transfer Assist - Your pathway to successful college transfer</p>
+    </footer>
+
+    <script>
+        // Load majors from university.json
+        fetch("university.json")
+            .then(response => response.json())
+            .then(data => {
+                const select = document.getElementById("dropdown");
+                const formSelect = document.getElementById("form-major");
+                
+                if (!select || !formSelect) {
+                    console.error('Required select elements not found');
+                    return;
+                }
+
+                // Create a set of unique majors
+                const majorsSet = new Set();
+                const universities = data.universities || [];
+                universities.forEach(u => {
+                    if (Array.isArray(u.majors)) {
+                        u.majors.forEach(m => {
+                            if (m && typeof m === 'string') {
+                                majorsSet.add(m.trim());
+                            }
+                        });
+                    }
+                });
+
+                // Clear existing options except the placeholder
+                const placeholder = select.querySelector('option');
+                select.innerHTML = '';
+                if (placeholder) select.appendChild(placeholder);
+
+                // Sort and append options to both selects
+                Array.from(majorsSet).sort((a,b) => a.localeCompare(b)).forEach(major => {
+                    const option = document.createElement('option');
+                    option.value = major;
+                    option.textContent = major;
+                    select.appendChild(option);
+                    
+                    const formOption = option.cloneNode(true);
+                    formSelect.appendChild(formOption);
+                });
+            })
+            .catch(err => console.error('Error fetching university data:', err));
+
+        // Course management functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const courseInput = document.getElementById('courseInput');
+            const addCourseBtn = document.getElementById('addCourseBtn');
+            const quickCourseList = document.getElementById('quickCourseList');
+            
+            let courses = [];
+            
+            // Add course to list
+            addCourseBtn.addEventListener('click', function() {
+                const courseName = courseInput.value.trim();
+                if (courseName && !courses.includes(courseName)) {
+                    courses.push(courseName);
+                    updateCourseList();
+                    courseInput.value = '';
+                }
+            });
+            
+            // Remove course from list
+            function removeCourse(courseName) {
+                courses = courses.filter(c => c !== courseName);
+                updateCourseList();
+            }
+            
+            // Update the displayed course list
+            function updateCourseList() {
+                quickCourseList.innerHTML = courses.map(course => 
+                    `<div class="course-item">
+                        <span>${course}</span>
+                        <button onclick="removeCourse('${course}')">Remove</button>
+                    </div>`
+                ).join('');
+            }
+            
+            // Enter key support for course input
+            courseInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    addCourseBtn.click();
+                }
+            });
+            
+            // Make removeCourse function available globally
+            window.removeCourse = removeCourse;
+        });
+
+        // Gallery functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.querySelector('.gallery-track');
+            const slides = document.querySelectorAll('.gallery-slide');
+            const prevBtn = document.querySelector('.gallery-prev');
+            const nextBtn = document.querySelector('.gallery-next');
+            const indicators = document.querySelectorAll('.gallery-indicator');
+            
+            let currentIndex = 0;
+            const slideCount = slides.length;
+            
+            // Update gallery position
+            function updateGallery() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // Update indicators
+                indicators.forEach((indicator, index) => {
+                    indicator.classList.toggle('active', index === currentIndex);
+                });
+            }
+            
+            // Next slide
+            nextBtn.addEventListener('click', function() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateGallery();
+            });
+            
+            // Previous slide
+            prevBtn.addEventListener('click', function() {
+                currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                updateGallery();
+            });
+            
+            // Indicator click
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', function() {
+                    currentIndex = index;
+                    updateGallery();
+                });
+            });
+            
+            // Auto-advance gallery
+            setInterval(function() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateGallery();
+            }, 5000);
+        });
+
+        // Scroll event functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const appContainer = document.querySelector('.app-container');
+            const featureItems = document.querySelectorAll('.feature-item');
+            const formContainer = document.querySelector('.form-container');
+            const scrollIndicator = document.getElementById('scroll-indicator');
+            const applicationSection = document.getElementById('application-section');
+            
+            // Function to check if element is in viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.8
+                );
+            }
+            
+            // Function to handle scroll events
+            function handleScroll() {
+                // Show application container when scrolled into view
+                if (isInViewport(applicationSection) && !appContainer.classList.contains('visible')) {
+                    appContainer.classList.add('visible');
+                    
+                    // Animate feature items with delay
+                    featureItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, 300 + (index * 200));
+                    });
+                }
+                
+                // Show form when user scrolls near the bottom
+                if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 600) {
+                    formContainer.classList.add('visible');
+                }
+                
+                // Show scroll indicator when not at top
+                if (window.scrollY > 300) {
+                    scrollIndicator.classList.add('visible');
+                } else {
+                    scrollIndicator.classList.remove('visible');
+                }
+            }
+            
+            // Scroll to top function
+            scrollIndicator.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Listen for scroll events
+            window.addEventListener('scroll', handleScroll);
+            
+            // Initial check on page load
+            handleScroll();
+        });
+
+        // Form submission handling
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('transfer-form');
+            const successMessage = document.getElementById('success-message');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                
+                // In a real application, you would send this data to a server
+                // For this demo, we'll just simulate a successful submission
+                console.log('Form submitted with data:', data);
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                
+                // Reset form after a delay
+                setTimeout(() => {
+                    form.reset();
+                    successMessage.style.display = 'none';
+                }, 5000);
+            });
+        });
+    </script>
+    <script>
+(() => {
+  const canvas = document.getElementById('bg-fx');
+  const ctx = canvas.getContext('2d');
+  let width, height, dpr;
+  const particles = [];
+  const MAX_PARTICLES = 180;       // cap to protect perf
+  const SPAWN_PER_MOVE = 6;        // how many per mouse event
+  const FRICTION = 0.985;          // slow drift
+  const FADE = 0.018;              // alpha fade per frame
+  const SIZE = [2, 5];             // min/max radius (px)
+  const SPEED = [0.4, 1.6];        // initial speed range
+  let lastSpawn = 0;
+
+  function resize() {
+    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    width = canvas.clientWidth = window.innerWidth;
+    height = canvas.clientHeight = window.innerHeight;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function rand(a, b) { return a + Math.random() * (b - a); }
+
+  function spawn(x, y, n) {
+    for (let i = 0; i < n; i++) {
+      if (particles.length >= MAX_PARTICLES) particles.shift();
+      const ang = Math.random() * Math.PI * 2;
+      const spd = rand(SPEED[0], SPEED[1]);
+      particles.push({
+        x, y,
+        vx: Math.cos(ang) * spd,
+        vy: Math.sin(ang) * spd,
+        r: rand(SIZE[0], SIZE[1]),
+        a: 1.0
+      });
+    }
+  }
+
+  function step() {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.vx *= FRICTION; p.vy *= FRICTION;
+      p.x += p.vx; p.y += p.vy;
+      p.a -= FADE;
+      if (p.a <= 0 || p.x < -20 || p.y < -20 || p.x > width + 20 || p.y > height + 20) {
+        particles.splice(i, 1);
+        continue;
+      }
+      // soft, subtle fill; uses current body background for harmony
+      ctx.globalAlpha = p.a * 0.9;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fillStyle = '#7a5fb5';   // matches your purple brand tones; tweak if desired
+      ctx.fill();
+
+      // gentle glow
+      ctx.globalAlpha = p.a * 0.25;
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+      g.addColorStop(0, '#7a5fb5');
+      g.addColorStop(1, 'rgba(122,95,181,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+    requestAnimationFrame(step);
+  }
+
+  function onMove(e) {
+    const now = performance.now();
+    if (now - lastSpawn < 12) return; // throttle spawn rate
+    lastSpawn = now;
+    const x = ('touches' in e) ? e.touches[0].clientX : e.clientX;
+    const y = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+    spawn(x, y, SPAWN_PER_MOVE);
+  }
+
+  addEventListener('mousemove', onMove, { passive: true });
+  addEventListener('touchmove', onMove, { passive: true });
+  addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(step);
+})();
+</script>
+<!-- add this small JS block anywhere after your other DOMContentLoaded handlers -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const appCue = document.getElementById('app-scroll-cue');
+  const appSection = document.getElementById('application-section');
+
+  // Fade the arrow in shortly after load so it feels intentional.
+  setTimeout(() => appCue.classList.add('visible'), 500);
+
+  // Clicking the arrow smoothly scrolls to the application section.
+  appCue.addEventListener('click', () => {
+    appSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  // If you prefer showing the arrow only when the cover is fully in view, uncomment below:
+  /*
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) appCue.classList.add('visible');
+      else appCue.classList.remove('visible');
+    });
+  }, { threshold: 0.8 });
+  io.observe(document.getElementById('cover'));
+  */
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const el = document.getElementById('launch-app-btn')
+           || document.querySelector('#launch-app-btn a')
+           || document.querySelector('#launch-app-btn');
+  if (!el) return;
+
+  el.addEventListener('click', (e) => {
+    try {
+      const get = id => document.getElementById(id)?.value?.trim() || '';
+      const ctx = {
+        current: get('currentUni'),
+        target:  get('targetUni'),
+        major:   get('major') || get('dropdown')
+      };
+      const payload = Array.isArray(window.courses) ? window.courses : [];
+
+      localStorage.setItem('ta.quickCourses', JSON.stringify(payload));
+      localStorage.setItem('ta.bridgeContext', JSON.stringify(ctx));
+
+      const href = (el.tagName === 'A' ? el.getAttribute('href') : 'MyPlan.html') || 'MyPlan.html';
+      const q = new URLSearchParams();
+      if (ctx.current) q.set('current', ctx.current);
+      if (ctx.target)  q.set('target',  ctx.target);
+      if (ctx.major)   q.set('major',   ctx.major);
+      // 如需同时经 URL 传课程，可取消下一行注释并提供 toCSV(payload)
+      // q.set('courses', toCSV(payload));
+
+      if (el.tagName === 'A') {
+        el.href = href + (href.includes('?') ? '&' : '?') + q.toString();
+      } else {
+        e.preventDefault();
+        window.location.href = href + (href.includes('?') ? '&' : '?') + q.toString();
+      }
+    } catch (err) {
+      console.error('handoff failed:', err);
+    }
+  });
+});
+</script>
+
+    <script>
+        // Enhanced particle effect with connecting lines
+        (() => {
+            const canvas = document.getElementById('bg-fx');
+            const ctx = canvas.getContext('2d');
+            let width, height, dpr;
+            const particles = [];
+            const MAX_PARTICLES = 180;
+            const SPAWN_PER_MOVE = 6;
+            const FRICTION = 0.985;
+            const FADE = 0.018;
+            const SIZE = [2, 5];
+            const SPEED = [0.4, 1.6];
+            const MAX_CONNECTION_DISTANCE = 150;
+            let lastSpawn = 0;
+
+            function resize() {
+                dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+                width = canvas.clientWidth = window.innerWidth;
+                height = canvas.clientHeight = window.innerHeight;
+                canvas.width = Math.floor(width * dpr);
+                canvas.height = Math.floor(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            function rand(a, b) { return a + Math.random() * (b - a); }
+
+            function spawn(x, y, n) {
+                for (let i = 0; i < n; i++) {
+                    if (particles.length >= MAX_PARTICLES) particles.shift();
+                    const ang = Math.random() * Math.PI * 2;
+                    const spd = rand(SPEED[0], SPEED[1]);
+                    particles.push({
+                        x, y,
+                        vx: Math.cos(ang) * spd,
+                        vy: Math.sin(ang) * spd,
+                        r: rand(SIZE[0], SIZE[1]),
+                        a: 1.0,
+                        connections: []
+                    });
+                }
+            }
+
+            function calculateConnections() {
+                // Reset connections
+                particles.forEach(p => p.connections = []);
+                
+                // Calculate new connections
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p1 = particles[i];
+                        const p2 = particles[j];
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < MAX_CONNECTION_DISTANCE) {
+                            // Calculate connection strength based on distance and particle alpha
+                            const strength = (1 - distance / MAX_CONNECTION_DISTANCE) * Math.min(p1.a, p2.a);
+                            
+                            if (strength > 0.05) { // Only create visible connections
+                                p1.connections.push({
+                                    target: p2,
+                                    distance: distance,
+                                    strength: strength
+                                });
+                                p2.connections.push({
+                                    target: p1,
+                                    distance: distance,
+                                    strength: strength
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            function step() {
+                ctx.clearRect(0, 0, width, height);
+                
+                // Update particle positions and fade
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.vx *= FRICTION; p.vy *= FRICTION;
+                    p.x += p.vx; p.y += p.vy;
+                    p.a -= FADE;
+                    if (p.a <= 0 || p.x < -20 || p.y < -20 || p.x > width + 20 || p.y > height + 20) {
+                        particles.splice(i, 1);
+                        continue;
+                    }
+                }
+                
+                // Calculate connections between particles
+                calculateConnections();
+                
+                // Draw connections first (so particles appear on top)
+                particles.forEach(p => {
+                    p.connections.forEach(conn => {
+                        if (conn.target.a > 0) {
+                            const alpha = conn.strength * 0.7;
+                            ctx.globalAlpha = alpha;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(conn.target.x, conn.target.y);
+                            ctx.strokeStyle = '#7a5fb5';
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    });
+                });
+                
+                // Draw particles
+                particles.forEach(p => {
+                    // Particle fill
+                    ctx.globalAlpha = p.a * 0.9;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.fillStyle = '#7a5fb5';
+                    ctx.fill();
+
+                    // Particle glow
+                    ctx.globalAlpha = p.a * 0.25;
+                    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+                    g.addColorStop(0, '#7a5fb5');
+                    g.addColorStop(1, 'rgba(122,95,181,0)');
+                    ctx.fillStyle = g;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(step);
+            }
+
+            function onMove(e) {
+                const now = performance.now();
+                if (now - lastSpawn < 12) return; // throttle spawn rate
+                lastSpawn = now;
+                const x = ('touches' in e) ? e.touches[0].clientX : e.clientX;
+                const y = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+                spawn(x, y, SPAWN_PER_MOVE);
+            }
+
+            addEventListener('mousemove', onMove, { passive: true });
+            addEventListener('touchmove', onMove, { passive: true });
+            addEventListener('resize', resize);
+            resize();
+            requestAnimationFrame(step);
+        })();
+
+        // Scroll animation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            const featureCards = document.querySelectorAll('.feature-card');
+            const imagePlaceholders = document.querySelectorAll('.image-placeholder');
+            const statItems = document.querySelectorAll('.stat-item');
+            const testimonials = document.querySelectorAll('.testimonial');
+            const scrollIndicator = document.getElementById('scroll-indicator');
+            
+            // Function to check if element is in viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+                );
+            }
+            
+            // Function to handle scroll events
+            function handleScroll() {
+                // Animate sections
+                sections.forEach(section => {
+                    if (isInViewport(section)) {
+                        section.classList.add('visible');
+                    }
+                });
+                
+                // Animate feature cards with delay
+                featureCards.forEach((card, index) => {
+                    if (isInViewport(card)) {
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, 300 + (index * 200));
+                    }
+                });
+                
+                // Animate image placeholders
+                imagePlaceholders.forEach(placeholder => {
+                    if (isInViewport(placeholder)) {
+                        placeholder.classList.add('visible');
+                    }
+                });
+                
+                // Animate stat items with delay
+                statItems.forEach((item, index) => {
+                    if (isInViewport(item)) {
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, 300 + (index * 200));
+                    }
+                });
+                
+                // Animate testimonials
+                testimonials.forEach(testimonial => {
+                    if (isInViewport(testimonial)) {
+                        testimonial.classList.add('visible');
+                    }
+                });
+                
+                // Show scroll indicator when not at top
+                if (window.scrollY > 300) {
+                    scrollIndicator.classList.add('visible');
+                } else {
+                    scrollIndicator.classList.remove('visible');
+                }
+            }
+            
+            // Scroll to top function
+            scrollIndicator.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Listen for scroll events
+            window.addEventListener('scroll', handleScroll);
+            
+            // Initial check on page load
+            handleScroll();
+        });
+    </script>
+
+</body>
 </html>
