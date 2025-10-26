@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Transfer Assist — Web</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+  <style>
+    :root{--bg:#1e1e1e;--bg2:#252525;--panel:#2d2d2d;--border:#404040;--muted:#95a5a6;--text:#e0e0e0;--accent:#3498db;--ok:#27ae60;--ok-hover:#219653;--warn:#e74c3c}
+    *{box-sizing:border-box}html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";background:var(--bg);color:var(--text)}
+    .app{display:grid;grid-template-rows:auto 1fr;height:100%}
+    .topbar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--border)}
+    .topbar .title{font-weight:700;color:#fff;margin-right:12px}
+    .select,.input,.spin{background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px}
+    .btn{background:var(--ok);color:#fff;border:none;border-radius:6px;padding:8px 12px;font-weight:700;cursor:pointer}
+    .btn:hover{background:var(--ok-hover)}.btn.secondary{background:var(--accent)}.btn.danger{background:var(--warn)}
+    .main{display:grid;grid-template-columns:360px 1fr 420px;gap:12px;padding:12px;height:calc(100vh - 58px)}
+    .panel{background:var(--bg2);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;min-height:0}
+    .section{padding:12px 12px 0;font-weight:700;color:var(--accent)}
+    .content{padding:8px 12px 12px;display:flex;flex-direction:column;gap:8px;min-height:0}
+    .row{display:flex;gap:8px;align-items:center}.grow{flex:1}
+    .list{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:6px;min-height:160px;overflow:auto}
+    .list-item{padding:8px 10px;border-radius:6px;border:1px solid transparent;background:#2a2a2a;margin:4px 0;cursor:grab;user-select:none}
+    .list-item.dragging{opacity:.5}.muted{color:var(--muted)}
+    .script{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:8px;overflow:auto;white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace}
+    .gantt{height:420px;border:1px solid var(--border);border-radius:8px;background:var(--panel)}
+    .status{text-align:center;color:var(--muted);padding:10px}
+    .ai-box{display:flex;flex-direction:column;gap:8px}
+    .textarea{width:100%;min-height:120px;background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:8px;resize:vertical}
+    .ai-response{flex:1;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:8px;overflow:auto;white-space:pre-wrap}
+    input[type="date"],input[type="number"]{background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px 10px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <div class="title">Transfer Assist — Web</div>
+      <label>AI Model</label>
+      <select id="model" class="select">
+        <option>claude-3-sonnet-20240229</option>
+        <option>claude-sonnet-4-5-20250929</option>
+      </select>
+      <label>Max tokens</label>
+      <input id="maxTokens" class="spin" type="number" min="200" max="4000" value="1200"/>
+      <button id="loadJsonBtn" class="btn">Load University Data</button>
+      <input id="jsonFile" type="file" accept="application/json" hidden/>
+      <button id="exportBtn" class="btn secondary">Export Plan</button>
+      <button id="refreshBtn" class="btn">Refresh Gantt</button>
+      <div class="grow"></div>
+      <div id="status" class="muted">Ready</div>
+    </div>
+
+    <div class="main">
+      <!-- Left -->
+      <div class="panel">
+        <div class="section">University Selection</div>
+        <div class="content">
+          <label>Current University</label>
+          <input id="currentUni" class="input" list="uniList" placeholder="Type or choose…"/>
+          <label>Target University</label>
+          <input id="targetUni" class="input" list="uniList" placeholder="Type or choose…"/>
+          <datalist id="uniList"></datalist>
+
+          <label>Major</label>
+          <input id="major" class="input" list="majorList" placeholder="Start typing…"/>
+          <datalist id="majorList"></datalist>
+
+          <div class="section">Academic Term</div>
+          <div class="row">
+            <select id="term" class="select"><option>Fall</option><option>Spring</option><option>Summer</option></select>
+            <input id="termYear" class="spin" type="number" min="2000" max="2100"/>
+          </div>
+
+          <div class="section">Course Planning</div>
+          <div class="content">
+            <label>Available Courses</label>
+            <div id="available" class="list" aria-label="Available courses"></div>
+            <label>Planned Courses</label>
+            <div id="planned" class="list" aria-label="Planned courses"></div>
+            <div class="row">
+              <input id="customCourse" class="input grow" placeholder="Add custom course…"/>
+              <button id="addCourse" class="btn">Add</button>
+            </div>
+
+            <div class="section">Gantt Chart Controls</div>
+            <div class="row">
+              <button id="addToGantt" class="btn">Add to Gantt</button>
+              <button id="editFirst" class="btn secondary">Edit First Item</button>
+              <button id="removeFirst" class="btn danger">Remove First</button>
+            </div>
+            <button id="suggestBtn" class="btn">AI: Suggest Missing Courses</button>
+            <button id="genPlanBtn" class="btn">AI: Generate Transfer Plan</button>
+            <button id="commitBtn" class="btn danger">I'm Committed — Start Journey</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center -->
+      <div class="panel">
+        <div class="section">Transfer Timeline — Gantt Chart</div>
+        <div class="content">
+          <div id="gantt" class="gantt"></div>
+          <div id="ganttStatus" class="status">No courses in Gantt. Add from your planned list.</div>
+          <div class="section">Transfer Plan Script</div>
+          <div id="script" class="script"></div>
+        </div>
+      </div>
+
+      <!-- Right -->
+      <div class="panel">
+        <div class="section">AI Transfer Assistant</div>
+        <div class="content ai-box">
+          <label>Your Question</label>
+          <textarea id="userPrompt" class="textarea" placeholder="Ask about requirements, sequencing, schedule optimization…"></textarea>
+          <div class="row">
+            <button id="askBtn" class="btn">Send to AI Assistant</button>
+            <div id="aiBusy" class="muted"></div>
+          </div>
+          <label>AI Response</label>
+          <div id="aiResp" class="ai-response"></div>
+          <div class="muted">Backend required for Anthropic. Only text is shown; CSV is parsed silently.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Data ----------
+    const state = {
+      uniData: { universities: [] },  // {name, majors[]}
+      ganttCourses: [],
+      milestones: []
+    };
+
+    // ---------- Helpers ----------
+    const $  = s => document.querySelector(s);
+    const $$ = s => Array.from(document.querySelectorAll(s));
+    const fmt = d => dayjs(d).format('YYYY-MM-DD');
+    const setStatus = t => $('#status').textContent = t;
+
+    // ---------- University store & UI ----------
+    function getUniNames(){ return state.uniData.universities.map(u=>u.name).filter(Boolean); }
+    function ensureUniversity(name){
+      if(!name) return;
+      if(!state.uniData.universities.some(u=>u.name===name)){
+        state.uniData.universities.push({ name, majors: [] });
+      }
+    }
+    function populateUniList(){
+      const dl = $('#uniList');
+      const names = Array.from(new Set(getUniNames())).sort((a,b)=>a.localeCompare(b));
+      dl.innerHTML = names.map(n=>`<option value="${n}"></option>`).join('');
+    }
+    function updateMajors(){
+        const cu = $('#currentUni').value.trim();
+        const tu = $('#targetUni').value.trim();
+        const byName = Object.fromEntries(state.uniData.universities.map(u=>[u.name, u.majors||[]]));
+        const majors = Array.from(new Set([...(byName[cu]||[]), ...(byName[tu]||[])])).filter(Boolean);
+        const dl = $('#majorList');
+        dl.innerHTML = majors.sort((a,b)=>a.localeCompare(b)).map(m=>`<option value="${m}"></option>`).join('');
+        const mv = $('#major').value.trim();
+        if(mv && ![...dl.children].some(o=>o.value===mv)){ const opt=document.createElement('option'); opt.value=mv; dl.appendChild(opt); }
+    }
+
+    // ---------- Bridge state ----------
+    function readBridgeStateAndSeed(){
+      const qs = new URLSearchParams(location.search);
+      const ls = (k,fb='')=>localStorage.getItem(k)??fb;
+
+      const brCurrent = (qs.get('current') ?? ls('ta.currentUni','')).trim();
+      const brTarget  = (qs.get('target')  ?? (JSON.parse(ls('ta.selectedUnis','[]'))[0]||'')).trim();
+      const brMajor   = (qs.get('major')   ?? ls('ta.major','')).trim();
+
+      const coursesParam = qs.get('courses');
+      const quickCourses = coursesParam
+        ? coursesParam.split('|').map(s=>s.trim()).filter(Boolean)
+        : JSON.parse(ls('ta.quickCourses','[]'));
+
+      if(state.uniData.universities.length===0){
+        const seed = new Set([brCurrent, brTarget].filter(Boolean));
+        if(seed.size===0){ seed.add('Your College'); seed.add('Target University'); }
+        state.uniData.universities = [...seed].map(n=>({name:n, majors:[]}));
+      }
+      ensureUniversity(brCurrent); ensureUniversity(brTarget);
+
+      $('#currentUni').value = brCurrent;
+      $('#targetUni').value  = brTarget;
+      $('#major').value      = brMajor;
+
+      populateUniList();
+      updateMajors();
+
+      const planned = $('#planned');
+      if(planned && Array.isArray(quickCourses) && quickCourses.length){
+        planned.innerHTML = '';
+        quickCourses.forEach(c=>addListItem(planned, c));
+      }
+    }
+
+    // ---------- List & DnD ----------
+    const available = $('#available'), planned = $('#planned');
+    const sampleCourses = ["Calculus I","Calculus II","Linear Algebra","Physics I","Physics II","General Chemistry","Algorithms","Discrete Mathematics","Statistics","English Composition"];
+    function addListItem(container, text){
+      const el=document.createElement('div'); el.className='list-item'; el.textContent=text; el.draggable=true;
+      el.addEventListener('dragstart', e=>{ el.classList.add('dragging'); e.dataTransfer.setData('text/plain', text); e.dataTransfer.effectAllowed='move';});
+      el.addEventListener('dragend', ()=>el.classList.remove('dragging'));
+      container.appendChild(el);
+    }
+    function enableListDnd(container){
+      container.addEventListener('dragover', e=>e.preventDefault());
+      container.addEventListener('drop', e=>{
+        e.preventDefault();
+        const text=e.dataTransfer.getData('text/plain'); if(!text) return;
+        addListItem(container, text);
+        const dragging=document.querySelector('.list-item.dragging');
+        if(dragging && dragging.parentElement!==container) dragging.remove();
+        renderScript();
+      });
+    }
+    function initLists(){
+      available.innerHTML=''; planned.innerHTML='';
+      sampleCourses.forEach(c=>addListItem(available,c));
+      enableListDnd(available); enableListDnd(planned);
+    }
+
+    // ---------- Gantt ----------
+    function addCourseToGantt(name,start,end,type='Regular Course',inst='Current School'){
+      state.ganttCourses.push({Task:name,Start:start,Finish:end,Institution:inst,Resource:'Course',Course_Type:type});
+    }
+    function addMilestone(name,date,inst='Transfer'){
+      state.milestones.push({Task:name,Start:date,Finish:new Date(date.getTime()+86400000),Institution:inst,Resource:'Milestone',Course_Type:'Milestone'});
+    }
+    function ganttData(){ return [...state.ganttCourses, ...state.milestones]; }
+    function refreshGantt(){
+      const data=ganttData();
+      if(!data.length){ 
+        $('#ganttStatus').textContent='No courses in Gantt. Add from your planned list.'; 
+        Plotly.purge('gantt'); 
+        return; 
+      }
+      const traces = data.map(r=>({
+        x:[r.Start,r.Finish],
+        y:[r.Task,r.Task],
+        type:'scatter',
+        mode:'lines',
+        line:{width:14},
+        name:r.Institution,
+        hovertemplate:`${r.Task}<br>${fmt(r.Start)} → ${fmt(r.Finish)}<br>${r.Course_Type}<extra></extra>`
+      }));
+      const layout={
+        title:'Transfer Course Timeline',
+        paper_bgcolor:'rgba(0,0,0,0)',
+        plot_bgcolor:'rgba(0,0,0,0)',
+        font:{color:'#fff'},
+        xaxis:{gridcolor:'rgba(255,255,255,0.1)'},
+        yaxis:{gridcolor:'rgba(255,255,255,0.1)',type:'category'},
+        height:420,
+        showlegend:false
+      };
+      Plotly.newPlot('gantt', traces, layout, {displaylogo:false});
+      $('#ganttStatus').textContent='Gantt updated. Edit/remove uses the first item controls.';
+    }
+    $('#addToGantt').addEventListener('click', ()=>{
+      const plannedCourses = Array.from(planned.children).map(el=>el.textContent);
+      if(!plannedCourses.length){ alert('Add courses to your planned list first.'); return; }
+      state.ganttCourses=[]; state.milestones=[];
+      const start0=new Date(); let lastEnd=start0;
+      plannedCourses.forEach((course,i)=>{
+        const start=new Date(start0.getTime()+i*16*7*24*3600*1000);
+        const end=new Date(start.getTime()+16*7*24*3600*1000);
+        addCourseToGantt(course,start,end); lastEnd=end;
+      });
+      addMilestone('TRANSFER', new Date(lastEnd.getTime()+4*7*24*3600*1000));
+      refreshGantt(); setStatus(`Added ${plannedCourses.length} courses to Gantt.`); renderScript();
+    });
+    $('#editFirst').addEventListener('click', ()=>{
+      if(!state.ganttCourses.length){ alert('No courses in Gantt to edit.'); return; }
+      const c=state.ganttCourses[0];
+      const name=prompt('Course name',c.Task)??c.Task;
+      const s=prompt('Start date (YYYY-MM-DD)',fmt(c.Start))??fmt(c.Start);
+      const e=prompt('End date (YYYY-MM-DD)',fmt(c.Finish))??fmt(c.Finish);
+      const t=prompt('Course type',c.Course_Type)??c.Course_Type;
+      c.Task=name; c.Start=new Date(s); c.Finish=new Date(e); c.Course_Type=t;
+      refreshGantt(); setStatus('Course updated.'); renderScript();
+    });
+    $('#removeFirst').addEventListener('click', ()=>{
+      if(!state.ganttCourses.length){ alert('No courses in Gantt to remove.'); return; }
+      const r=state.ganttCourses.shift(); refreshGantt(); setStatus(`Removed '${r.Task}' from Gantt.`); renderScript();
+    });
+
+    // ---------- Script ----------
+    function renderScript(){
+      const current=$('#currentUni').value||'', target=$('#targetUni').value||'', major=$('#major').value||'';
+      const term=`${$('#term').value} ${$('#termYear').value}`;
+      const plannedCourses=Array.from(planned.children).map(el=>el.textContent);
+      const ganttNames=state.ganttCourses.map(c=>c.Task);
+      const text=[
+        'TRANSFER PLANNING SCRIPT','=======================','',
+        `Academic Plan for ${term}`,`Current: ${current} → Target: ${target}`,`Major: ${major}`,'',
+        'PLANNED COURSES:', plannedCourses.length? plannedCourses.map(c=>`• ${c}`).join('\n'):'• No courses planned yet','',
+        'GANTT CHART COURSES:', ganttNames.length? ganttNames.map(c=>`• ${c}`).join('\n'):'• No courses in Gantt chart','',
+        'STRATEGY:','• Complete prerequisite courses','• Maintain strong GPA (3.5+)','• Meet counselor','• Apply by deadline','','TIMELINE:',
+        '• See Gantt; balance load; keep buffers'
+      ].join('\n');
+      $('#script').textContent=text;
+    }
+
+    // ---------- Export/Commit ----------
+    $('#exportBtn').addEventListener('click', ()=>{
+      const blob=new Blob([$('#script').textContent+'\n\nGANTT CHART COURSES:\n'+state.ganttCourses.map(c=>`${c.Task}: ${fmt(c.Start)} to ${fmt(c.Finish)}`).join('\n')],{type:'text/plain'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`transfer_plan_${dayjs().format('YYYYMMDD_HHmmss')}.txt`; a.click();
+    });
+    $('#commitBtn').addEventListener('click', ()=>{
+      const data={
+        commitment_date:new Date().toISOString(),
+        current_university:$('#currentUni').value,target_university:$('#targetUni').value,major:$('#major').value,
+        planned_courses:Array.from(planned.children).map(el=>el.textContent),
+        gantt_courses:state.ganttCourses.map(c=>({...c,Start:fmt(c.Start),Finish:fmt(c.Finish)})),
+        transfer_plan:$('#script').textContent
+      };
+      const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`committed_journey_${dayjs().format('YYYYMMDD_HHmmss')}.json`; a.click();
+      alert('Committed. JSON saved.');
+    });
+
+    // ---------- Load JSON ----------
+    $('#loadJsonBtn').addEventListener('click', ()=>$('#jsonFile').click());
+    $('#jsonFile').addEventListener('change', async e=>{
+      const file=e.target.files?.[0]; if(!file) return;
+      try{
+        const text=await file.text(); let data=JSON.parse(text);
+        if(Array.isArray(data)) data={universities:data};
+        if(!data.universities) data={universities:[data]};
+        data.universities = (data.universities||[]).map(u=>({
+          name: String(u.name||'').trim(),
+          majors: Array.isArray(u.majors)? u.majors.filter(Boolean):[]
+        })).filter(u=>u.name);
+        state.uniData=data;
+        populateUniList(); updateMajors(); setStatus('University data loaded.');
+      }catch(err){ console.error(err); alert('Failed to load JSON.'); }
+    });
+
+    // ---------- AI Functions ----------
+    function buildAIContext(){
+      const term=`${$('#term').value} ${$('#termYear').value}`;
+      const plannedCourses = Array.from($('#planned').children).map(el=>el.textContent).join('; ');
+      const availableCourses= Array.from($('#available').children).map(el=>el.textContent).join('; ');
+      const ganttCourses= state.ganttCourses.map(c=>`${c.Task} (${fmt(c.Start)} to ${fmt(c.Finish)})`).join('; ');
+      
+      return `
+[TRANSFER_STUDENT_CONTEXT]
+current_university=${$('#currentUni').value}
+target_university=${$('#targetUni').value}
+major=${$('#major').value}
+current_term=${term}
+planned_courses=${plannedCourses}
+available_courses=${availableCourses}
+gantt_timeline=${ganttCourses}
+today_date=${fmt(new Date())}
+RESPONSE_POLICY=Return a single plain-text advisory block prefixed EXACTLY with "text_suggestion: " followed by braces. Provide any CSV ONLY inside a separate block prefixed EXACTLY with "code: " inside braces. Do not mix them.
+CSV_COLUMNS=Course,Term,Priority,Credits,DurationWeeks,Notes
+TERM_FORMATS=Fall ${new Date().getFullYear()},Spring ${new Date().getFullYear()+1},Summer ${new Date().getFullYear()+1},Fall ${new Date().getFullYear()+1}
+PRIORITY_LEVELS=High,Medium,Low
+[/TRANSFER_STUDENT_CONTEXT]
+Please provide:
+1. text_suggestion: {{advice for prerequisites, sequencing, deadlines, risk and load balancing}}
+2. code: {{CSV rows for the plan}}
+`;
+    }
+
+    async function callAnthropic(prompt){
+      try{
+        const modelEl = document.querySelector('#model');
+        const maxTokEl = document.querySelector('#maxTokens');
+        const model = modelEl ? modelEl.value : 'claude-3-5-sonnet-latest';
+        const max_tokens = maxTokEl ? Number(maxTokEl.value) || 512 : 512;
+
+        const resp = await fetch('/api/anthropic', {
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({
+            model,
+            max_tokens,
+            messages:[{role:'user', content:[{type:'text', text: prompt}]}],
+            prompt
+          })
+        });
+        if(!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+
+        if (typeof data === 'string') return data;
+        if (typeof data.text === 'string') return data.text;
+        if (Array.isArray(data.content)) {
+          return data.content.map(c => typeof c === 'string' ? c : (c?.text||'')).join('\n').trim() || '[empty response]';
+        }
+        if (data.message?.content) {
+          const c = data.message.content;
+          return Array.isArray(c) ? c.map(x=>x.text||'').join('\n') : (c.text || String(c));
+        }
+        return '[empty response]';
+      }catch(err){
+        console.warn('Anthropic fallback:', err);
+        return `text_suggestion:{Focus on completing missing math/physics prerequisites this term, limit load to 3 rigorous courses, schedule labs on lighter weeks, and submit applications 4 weeks before deadlines.}
+
+code:{
+Course,Term,Priority,Credits,DurationWeeks,Notes
+Calculus II,${document.querySelector('#term')?.value||'Fall'} ${document.querySelector('#termYear')?.value||'2025'},High,5,16,
+Physics II,${document.querySelector('#term')?.value||'Fall'} ${document.querySelector('#termYear')?.value||'2025'},High,5,16,with lab
+Linear Algebra,${document.querySelector('#term')?.value||'Fall'} ${document.querySelector('#termYear')?.value||'2025'},Medium,4,16,
+}`;
+      }
+    }
+
+    function extractTextSuggestion(fullText){
+      const m = fullText.match(/text_suggestion\s*:\s*\{([\s\S]*?)\}/i);
+      if (m) return m[1].trim();
+      const md = fullText.match(/^(Suggestion[s]?:|Advice:)\s*([\s\S]+?)(?:\n{2,}|code\s*:|\Z)/i);
+      return (md ? md[2] : fullText).trim();
+    }
+
+    function parseCsvFromResponse(fullText){
+      let csv = '';
+      let m = fullText.match(/code\s*:\s*\{([\s\S]*?)\}/i);
+      if (m) csv = m[1].trim();
+      if (!csv) {
+        m = fullText.match(/```(?:csv)?\s*([\s\S]*?)```/i);
+        if (m) csv = m[1].trim();
+      }
+      if (!csv) {
+        const lines = fullText.split(/\r?\n/).map(s=>s.trim());
+        const start = lines.findIndex(l => /^Course\s*,\s*Term\s*,/i.test(l));
+        if (start !== -1) {
+          const tail = [];
+          for (let i=start; i<lines.length; i++){
+            if (!lines[i]) break;
+            tail.push(lines[i]);
+            if (i-start>200) break;
+          }
+          csv = tail.join('\n');
+        }
+      }
+      return csv || null;
+    }
+
+    // NEW FUNCTION: Import CSV to planned list
+    function importPlannedFromCsv(csvText) {
+      try {
+        const lines = csvText.split('\n').filter(line => line.trim());
+        if (lines.length < 2) return false; // Need at least header and one data row
+        
+        const header = lines[0].split(',').map(h => h.trim());
+        const courseIndex = header.findIndex(col => col.toLowerCase() === 'course');
+        
+        if (courseIndex === -1) return false;
+        
+        const plannedList = $('#planned');
+        const existingCourses = new Set(Array.from(plannedList.children).map(el => el.textContent.trim()));
+        
+        let addedCount = 0;
+        
+        for (let i = 1; i < lines.length; i++) {
+          const row = lines[i].split(',').map(cell => cell.trim());
+          if (row.length > courseIndex) {
+            const courseName = row[courseIndex];
+            if (courseName && !existingCourses.has(courseName)) {
+              addListItem(plannedList, courseName);
+              existingCourses.add(courseName);
+              addedCount++;
+            }
+          }
+        }
+        
+        if (addedCount > 0) {
+          setStatus(`Added ${addedCount} courses from AI to planned list`);
+          renderScript();
+          return true;
+        }
+        return false;
+      } catch (error) {
+        console.error('Error importing CSV:', error);
+        return false;
+      }
+    }
+
+    // NEW FUNCTION: Run AI for suggestions or plan generation
+    async function runAI(kind){
+      const busy = $('#aiBusy');
+      const respBox = $('#aiResp');
+      busy.textContent = 'Generating…';
+
+      const sys = buildAIContext();
+      const prompt = kind==='missing'
+          ? `${sys}\n\nList missing courses as CSV with header: Course,Term,Priority,Credits,DurationWeeks,Notes. Also include a brief "text_suggestion" paragraph first.`
+          : `${sys}\n\nPropose a term-by-term transfer plan as CSV with header: Course,Term,Priority,Credits,DurationWeeks,Notes. Also include a brief "text_suggestion" paragraph first.`;
+
+      const raw = await callAnthropic(prompt);
+      busy.textContent = '';
+      
+      const textSuggestion = extractTextSuggestion(raw);
+      respBox.textContent = textSuggestion;
+
+      const csv = parseCsvFromResponse(raw);
+      if (csv) {
+        const imported = importPlannedFromCsv(csv);
+        if (imported) {
+          // Auto-add to Gantt after a brief delay to ensure UI updates
+          setTimeout(() => {
+            $('#addToGantt').click();
+            setStatus('AI courses added to Gantt chart');
+          }, 500);
+        }
+      }
+    }
+
+    // Event listeners for AI buttons
+    $('#suggestBtn').addEventListener('click', () => runAI('missing'));
+    $('#genPlanBtn').addEventListener('click', () => runAI('plan'));
+
+    $('#askBtn').addEventListener('click', async ()=>{
+      const user=$('#userPrompt').value.trim(); 
+      if(!user){ alert('Enter a question.'); return; }
+      
+      $('#aiBusy').textContent='Generating…';
+      const context = buildAIContext();
+      const fullPrompt = `${context}\n\nUser Question: ${user}`;
+      
+      const text=await callAnthropic(fullPrompt); 
+      $('#aiBusy').textContent='';
+      
+      const textSuggestion = extractTextSuggestion(text);
+      $('#aiResp').textContent = textSuggestion;
+      
+      const csv=parseCsvFromResponse(text);
+      if(csv) {
+        const imported = importPlannedFromCsv(csv);
+        if (imported) {
+          setTimeout(() => {
+            $('#addToGantt').click();
+            setStatus('AI courses added to Gantt chart');
+          }, 500);
+        }
+      }
+    });
+
+    // ---------- Events ----------
+    $('#currentUni').addEventListener('input', ()=>{ 
+      ensureUniversity($('#currentUni').value.trim()); 
+      populateUniList(); 
+      updateMajors(); 
+      renderScript(); 
+    });
+    
+    $('#targetUni').addEventListener('input',  ()=>{ 
+      ensureUniversity($('#targetUni').value.trim()); 
+      populateUniList(); 
+      updateMajors(); 
+      renderScript(); 
+    });
+    
+    $('#major').addEventListener('input', renderScript);
+    $('#term').addEventListener('change', renderScript);
+    $('#termYear').addEventListener('input', renderScript);
+    $('#refreshBtn').addEventListener('click', refreshGantt);
+    
+    $('#addCourse').addEventListener('click', ()=>{
+      const v=$('#customCourse').value.trim(); 
+      if(!v) return;
+      addListItem(available, v); 
+      $('#customCourse').value=''; 
+      setStatus(`Added course: ${v}`);
+    });
+
+    // ---------- Boot ----------
+    function boot(){
+      $('#termYear').value=new Date().getFullYear();
+      initLists();
+      readBridgeStateAndSeed();
+      populateUniList();
+      updateMajors();
+      renderScript();
+      setStatus('Ready to plan your transfer journey!');
+    }
+    
+    boot();
+  </script>
+</body>
+</html>
