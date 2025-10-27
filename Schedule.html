@@ -21,6 +21,7 @@
 				<option value=""  > Select major... </option>
 			</select>
 		</div>		
+		<button id="SchedBtn">Generate Schedule</button>
 		<script>
 			fetch("university.json")
 				.then(response => response.json())
@@ -39,7 +40,7 @@
 						if (Array.isArray(u.majors)) {
 							u.majors.forEach(m => {
 								for (let i=0;i<majorArray.length;i++){
-									if (u.majors[i] === m ) break;
+									if (u.majors[i].includes(m) ) break;
 								}
 								if (m && typeof m === 'string') {
 									majorsSet.add(m.trim());
@@ -49,6 +50,7 @@
 						}
 					});
 
+					
 					// Clear existing options except the placeholder
 					// (keep the first placeholder option if present)
 					const placeholder = select.querySelector('option');
@@ -64,6 +66,7 @@
 					});
 				})
 				.catch(err => console.error('error fetching/unpacking university.json:', err));
+				
 		</script>
             </section>
         <footer>
