@@ -3,4 +3,6 @@ Transfer Assist is an online counselor for transfer students applying to college
 
 Particle effects idea from: "https://codepen.io/thebalu/pen/Poyamde"
 
+Video Demo: https://www.youtube.com/watch?v=hyBx1pA1G-A
 Ads for anthropic and claude ai
+
