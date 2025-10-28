@@ -1,34 +1,728 @@
 <!DOCTYPE html>
-	<head>
-		<meta charset="utf-8">
-		<title>Home | Transfer Assist</title>
-		<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" href="styles.css">
-	</head>
-	<body>
-		<div class="header">
-			<nav>
-				<span class="title">Transfer Assist</span>
-				<a href="index.html" class="home">Home</a>
-				<a href="MyColleges.html">My Colleges</a>
-				<a href="Schedule.html">Schedules</a>
-			</nav>
-		</div>
-		<h1>Home </h1>
-		<p>Welcome to Transfer Assist, your personal transfer assistant</p>
-			<h1>About Us</h1>
-			<p>Transfer Assist is an online tool for transfer students applying to college. 
-				Transfer Assist uses information provided by Assist.org to generate efficient, 
-				practical, and ambitious schedule plans based on the needs of the student. 
-				Transfer Assist generates multiple education plans consisting of classes that 
-				meet multiple criteria for the student to choose from. This tool not only helps 
-				students, but also counselors, parents, and even colleges as they work on 
-				setting standards for what they want in their students.
-				</p>
-		    </section>
-	    <footer>
-	    </footer>
-		        <script src="my-script.js"></script>
-	</body>
-</html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Transfer Assist</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(to right, rgb(70, 3, 110), rgb(139, 53, 197));
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
+        h1 {
+            font-size: 36px;
+            margin: 30px 0 20px;
+            color: rgb(70, 3, 110);
+            font-weight: 700;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin: 25px 0 15px;
+            color: rgb(70, 3, 110);
+            font-weight: 600;
+        }
+        
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(70, 3, 110, 0.05), rgba(139, 53, 197, 0.05));
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .hero-section h1 {
+            font-size: 48px;
+            color: rgb(70, 3, 110);
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: rgb(70, 3, 110);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, rgb(70, 3, 110), rgb(139, 53, 197));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+        }
+
+        .testimonial {
+            background: linear-gradient(135deg, rgba(70, 3, 110, 0.03), rgba(139, 53, 197, 0.03));
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 4px solid rgb(139, 53, 197);
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.8s ease;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: rgb(70, 3, 110);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgb(70, 3, 110), rgb(139, 53, 197));
+            color: white;
+            border-radius: 15px;
+            margin: 60px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #e8e2ff, #d5c9ff);
+            border-radius: 10px;
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(70, 3, 110);
+            font-size: 18px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.6;
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        #content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .title {
+            padding-left: 20px;
+            font-size: 24px;
+            margin-top: 10px;
+            color: rgb(0, 0, 0);
+            text-align: left;
+            font-weight: 700;
+        }
+
+        h1.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        footer {
+            font-style: italic;
+            text-align: center;
+            padding: 30px;
+            margin-top: 60px;
+            border-top: 1px solid #ddd;
+            color: #777;
+            background-color: #f0f0f0;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 10px 20px;
+        }
+
+        nav a {
+            color: white;
+            font-size: 18px;
+            padding: 10px 20px;
+            background-color: rgb(139, 53, 197);
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav a:hover {
+            background-color: rgb(59, 3, 96);
+            transform: translateY(-2px);
+        }
+
+        nav a.active {
+            background-color: rgb(70, 3, 110);
+        }
+
+        .hero-section p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #666;
+        }
+
+        .section {
+            margin: 60px 0;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: #f9f7ff;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e8e2ff;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .image-placeholder.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 40px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .stat-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: rgb(139, 53, 197);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgb(139, 53, 197);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            z-index: 99;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .scroll-indicator.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-indicator:hover {
+            background: rgb(59, 3, 96);
+            transform: translateY(-5px);
+        }
+
+        .testimonial.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .testimonial p {
+            font-style: italic;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.9);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: white;
+            color: rgb(70, 3, 110);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            nav a {
+                font-size: 16px;
+                padding: 8px 15px;
+            }
+            
+            .hero-section h1 {
+                font-size: 36px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 25px;
+            }
+        }
+
+        /* Canvas particle effect styling */
+        #bg-fx {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        body > *:not(#bg-fx) { 
+            position: relative; 
+            z-index: 1; 
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <nav>
+            <span class="title">Transfer Assist</span>
+            <a href="index.html" class="active">Home</a>
+            <a href="MyColleges.html">My Colleges</a>
+            <a href="Schedule.html">Schedule</a>
+        </nav>
+    </div>
+
+    <div id="content">
+        <div class="hero-section">
+            <h1 class="visible">Welcome to Transfer Assist</h1>
+            <p>Your personal transfer assistant for navigating the college transfer process with confidence and clarity.</p>
+            <a href="Schedule.html" class="cta-button">Start Planning Your Transfer</a>
+        </div>
+
+        <div class="section" id="about-section">
+            <h1>About Us</h1>
+            <p>Transfer Assist is an innovative online tool designed specifically for transfer students applying to college. Our platform uses information provided by Assist.org to generate efficient, practical, and ambitious schedule plans tailored to each student's unique needs.</p>
+            
+            <div class="image-placeholder">
+                Student Success Visualization
+            </div>
+            
+            <p>Transfer Assist generates infinite many education plans consisting of classes that meet multiple criteria for the student to choose from. This tool not only helps students, but also counselors, parents, and even colleges as they work on setting standards for what they want in their students.</p>
+            
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-number">180+</div>
+                    <div class="stat-label">Colleges Supported</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">6k+</div>
+                    <div class="stat-label">Data points</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1024</div>
+                    <div class="stat-label">Tokens For Free</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="features-section">
+            <h2>How Transfer Assist Helps You</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Smart Planning</h3>
+                    <p>AI-powered course suggestions based on your target universities and major requirements.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Visual Scheduling</h3>
+                    <p>Interactive Gantt charts and timelines to visualize your academic journey.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Goal Tracking</h3>
+                    <p>Monitor your progress toward transfer requirements and application deadlines.</p>
+                </div>
+            </div>
+            
+            <div class="image-placeholder">
+                Transfer Planning Dashboard Preview
+            </div>
+        </div>
+
+        <div class="section" id="testimonials-section">
+            <h2>Founder's Story</h2>
+            <div class="testimonial">
+                <p>"Searching through the website myself created large amount of time wasted"</p>
+                <div class="testimonial-author">- Nicholas</div>
+            </div>
+            
+            <div class="testimonial">
+                <p>"As a prospective transfer student myself, I feel like this can really help me out."</p>
+                <div class="testimonial-author">- Hanh</div>
+            </div>
+            
+            <div class="image-placeholder">
+                Student Success Gallery
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Start Your Transfer Journey?</h2>
+            <p>Join thousands of students who have successfully transferred to their dream colleges with Transfer Assist.</p>
+            <a href="Schedule.html" class="cta-button">Create Your Transfer Plan Today</a>
+        </div>
+    </div>
+    
+    <div class="scroll-indicator" id="scroll-indicator">
+        ↑
+    </div>
+    
+    <footer>
+        <p>Transfer Assist - Your pathway to successful college transfer</p>
+    </footer>
+
+    <!-- Cursor particle canvas -->
+    <canvas id="bg-fx" aria-hidden="true"></canvas>
+
+    <script>
+        // Enhanced particle effect with connecting lines
+        (() => {
+            const canvas = document.getElementById('bg-fx');
+            const ctx = canvas.getContext('2d');
+            let width, height, dpr;
+            const particles = [];
+            const MAX_PARTICLES = 180;
+            const SPAWN_PER_MOVE = 6;
+            const FRICTION = 0.985;
+            const FADE = 0.018;
+            const SIZE = [2, 5];
+            const SPEED = [0.4, 1.6];
+            const MAX_CONNECTION_DISTANCE = 150;
+            let lastSpawn = 0;
+
+            function resize() {
+                dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+                width = canvas.clientWidth = window.innerWidth;
+                height = canvas.clientHeight = window.innerHeight;
+                canvas.width = Math.floor(width * dpr);
+                canvas.height = Math.floor(height * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            }
+
+            function rand(a, b) { return a + Math.random() * (b - a); }
+
+            function spawn(x, y, n) {
+                for (let i = 0; i < n; i++) {
+                    if (particles.length >= MAX_PARTICLES) particles.shift();
+                    const ang = Math.random() * Math.PI * 2;
+                    const spd = rand(SPEED[0], SPEED[1]);
+                    particles.push({
+                        x, y,
+                        vx: Math.cos(ang) * spd,
+                        vy: Math.sin(ang) * spd,
+                        r: rand(SIZE[0], SIZE[1]),
+                        a: 1.0,
+                        connections: []
+                    });
+                }
+            }
+
+            function calculateConnections() {
+                // Reset connections
+                particles.forEach(p => p.connections = []);
+                
+                // Calculate new connections
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p1 = particles[i];
+                        const p2 = particles[j];
+                        const dx = p1.x - p2.x;
+                        const dy = p1.y - p2.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < MAX_CONNECTION_DISTANCE) {
+                            // Calculate connection strength based on distance and particle alpha
+                            const strength = (1 - distance / MAX_CONNECTION_DISTANCE) * Math.min(p1.a, p2.a);
+                            
+                            if (strength > 0.05) { // Only create visible connections
+                                p1.connections.push({
+                                    target: p2,
+                                    distance: distance,
+                                    strength: strength
+                                });
+                                p2.connections.push({
+                                    target: p1,
+                                    distance: distance,
+                                    strength: strength
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            function step() {
+                ctx.clearRect(0, 0, width, height);
+                
+                // Update particle positions and fade
+                for (let i = particles.length - 1; i >= 0; i--) {
+                    const p = particles[i];
+                    p.vx *= FRICTION; p.vy *= FRICTION;
+                    p.x += p.vx; p.y += p.vy;
+                    p.a -= FADE;
+                    if (p.a <= 0 || p.x < -20 || p.y < -20 || p.x > width + 20 || p.y > height + 20) {
+                        particles.splice(i, 1);
+                        continue;
+                    }
+                }
+                
+                // Calculate connections between particles
+                calculateConnections();
+                
+                // Draw connections first (so particles appear on top)
+                particles.forEach(p => {
+                    p.connections.forEach(conn => {
+                        if (conn.target.a > 0) {
+                            const alpha = conn.strength * 0.7;
+                            ctx.globalAlpha = alpha;
+                            ctx.beginPath();
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(conn.target.x, conn.target.y);
+                            ctx.strokeStyle = '#7a5fb5';
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+                        }
+                    });
+                });
+                
+                // Draw particles
+                particles.forEach(p => {
+                    // Particle fill
+                    ctx.globalAlpha = p.a * 0.9;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                    ctx.closePath();
+                    ctx.fillStyle = '#7a5fb5';
+                    ctx.fill();
+
+                    // Particle glow
+                    ctx.globalAlpha = p.a * 0.25;
+                    const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+                    g.addColorStop(0, '#7a5fb5');
+                    g.addColorStop(1, 'rgba(122,95,181,0)');
+                    ctx.fillStyle = g;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                
+                ctx.globalAlpha = 1;
+                requestAnimationFrame(step);
+            }
+
+            function onMove(e) {
+                const now = performance.now();
+                if (now - lastSpawn < 12) return; // throttle spawn rate
+                lastSpawn = now;
+                const x = ('touches' in e) ? e.touches[0].clientX : e.clientX;
+                const y = ('touches' in e) ? e.touches[0].clientY : e.clientY;
+                spawn(x, y, SPAWN_PER_MOVE);
+            }
+
+            addEventListener('mousemove', onMove, { passive: true });
+            addEventListener('touchmove', onMove, { passive: true });
+            addEventListener('resize', resize);
+            resize();
+            requestAnimationFrame(step);
+        })();
+
+        // Scroll animation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sections = document.querySelectorAll('.section');
+            const featureCards = document.querySelectorAll('.feature-card');
+            const imagePlaceholders = document.querySelectorAll('.image-placeholder');
+            const statItems = document.querySelectorAll('.stat-item');
+            const testimonials = document.querySelectorAll('.testimonial');
+            const scrollIndicator = document.getElementById('scroll-indicator');
+            
+            // Function to check if element is in viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85
+                );
+            }
+            
+            // Function to handle scroll events
+            function handleScroll() {
+                // Animate sections
+                sections.forEach(section => {
+                    if (isInViewport(section)) {
+                        section.classList.add('visible');
+                    }
+                });
+                
+                // Animate feature cards with delay
+                featureCards.forEach((card, index) => {
+                    if (isInViewport(card)) {
+                        setTimeout(() => {
+                            card.classList.add('visible');
+                        }, 300 + (index * 200));
+                    }
+                });
+                
+                // Animate image placeholders
+                imagePlaceholders.forEach(placeholder => {
+                    if (isInViewport(placeholder)) {
+                        placeholder.classList.add('visible');
+                    }
+                });
+                
+                // Animate stat items with delay
+                statItems.forEach((item, index) => {
+                    if (isInViewport(item)) {
+                        setTimeout(() => {
+                            item.classList.add('visible');
+                        }, 300 + (index * 200));
+                    }
+                });
+                
+                // Animate testimonials
+                testimonials.forEach(testimonial => {
+                    if (isInViewport(testimonial)) {
+                        testimonial.classList.add('visible');
+                    }
+                });
+                
+                // Show scroll indicator when not at top
+                if (window.scrollY > 300) {
+                    scrollIndicator.classList.add('visible');
+                } else {
+                    scrollIndicator.classList.remove('visible');
+                }
+            }
+            
+            // Scroll to top function
+            scrollIndicator.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Listen for scroll events
+            window.addEventListener('scroll', handleScroll);
+            
+            // Initial check on page load
+            handleScroll();
+        });
+    </script>
+</body>
+</html>
